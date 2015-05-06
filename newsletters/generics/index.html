@@ -139,7 +139,7 @@ class Java9{
 }</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/resources/Java9.java#L0-L16" target="_blank"><i class="fa fa-link "></i></a></pre>
       <p>
           Notice <code>List&lt;int&gt;.class</code> prints <b>java.anyutil.List${0=I</b>} and <code>java.util.List.class</code> prints <b>java.util.List</b>. This means information about Parametric Types is also embedded at runtime.
-          <code>List&lt;int&gt;</code> is aware of it being a list of <code>int's</code>. The information is not erased. (Though this functionality will be available only for primitives and <a href="http://cr.openjdk.java.net/~jrose/values/values-0.html">value</a> classes in Java9. A special type variable identifier <code>any</code> is introduced for this enhanced treatment)</p>
+          <code>List&lt;int&gt;</code> is aware of it being a list of <code>int's</code>. The information is not erased. (Though this functionality will be available only for primitives and <a href="http://cr.openjdk.java.net/~jrose/values/values-0.html">value</a> classes in Java9. A special proposed type variable identifier <code>any</code> is introduced for this enhanced treatment)</p>
       <p>
           This ability to contain the type information at runtime is called <code>reifiability</code>. In Java all primitives, non-generic classes are reifiable (More details in <a href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.7">JLS</a>). Another classic example are <code>Arrays</code> in Java. Arrays in Java are refifiable:</p>
       <div>
@@ -205,9 +205,11 @@ Object[] objects = dog; // Dog[] &lt;: Animal[]</code><a class=" scalatex-site-S
       <p>
         Let <code>M&lt;X&gt;</code> be a class with <code>X</code> as its generic type. <code>M</code> is said to be contra-variant with its generic type if:</p>
       <pre><code class="scala scalatex-site-Styles-highlightMe">If A &lt;: B, then M&lt;A&gt; &gt;: M&lt;B&gt;</code></pre>
-      <code>andThen</code> method in <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html#andThen-java.util.function.Consumer-">Consumer.java</a> is contra-variant in its argument type
-      <pre><code class="scala scalatex-site-Styles-highlightMe">default Consumer&lt;T&gt; andThen(Consumer&lt;? super T&gt; after)
-</code></pre>
+      <p>
+        Examples for this can be found later in this document after we cover some more ground.
+        A theoretical example would be:</p>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">// Integer &lt;: Number
+List&lt;Integer&gt; ls = new ArrayList&lt;Number&gt;(); //illegal in java</code></pre>
     <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="In-Variance" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;" id="In-Variance">In-Variance<a class=" scalatex-site-Styles-headerLink" href="#In-Variance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
       <p>
         If generic class is neither co-varianct nor contra-variant then it is invariant. Generics in Java are Invariant.</p>
@@ -249,7 +251,7 @@ List&lt;? super Dog&gt; dog;
 //	 Dog &lt;: This unknown type &lt;: Object</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/resources/Variance.java#L19-L27" target="_blank"><i class="fa fa-link "></i></a></pre>
       <p>
         In Java, co-variance and contra-variance of generics is not possible first-hand. But using bounds with wildcards, you can replicate the behavior as a second class citizen.</p>
-      <div style="opacity: 0.5;font-style: oblique;">
+      <div style="opacity: 0.6;font-style: oblique;">
         <p>
           For people interested in theory behind wildcards: Wildcards are a restricted form of existential types (Remember <a href="http://en.wikipedia.org/wiki/Existential_quantification">Existential Quantifier</a> in Mathematics).
           So say if you have `SomeClass&lt;X extends String&gt;`, then `SomeClass&lt;?&gt;` is a shorthand for`SomeClass&lt;T&gt; forSome{type T &lt;: String}`.</p></div></div>
@@ -573,7 +575,7 @@ Then f o g = Integer =&gt; Integer
     //Function1.andThen(f,g); error
 }</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/Lib.java#L83-L89" target="_blank"><i class="fa fa-link "></i></a></pre>
       <p>
-        So we need to do better. Lets analyze it. For the composition <code>f o g</code>:</p>
+        So we need to do better. Lets analyze it. For the composition <code>g o f</code>:</p>
       <ul>
         <li>
           We will be writing an argument to `f`. So Contra-Variance</li>
@@ -590,7 +592,7 @@ Then f o g = Integer =&gt; Integer
                                     Function&lt;? super B,? extends C&gt; later){
     return (A t) -&gt; later.apply(first.apply(t));
 }</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/Lib.java#L91-L96" target="_blank"><i class="fa fa-link "></i></a></pre>
-      <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">public void fog(){
+      <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">public void gof(){
     Function&lt;Animal, Dog&gt; f = (Animal a) -&gt; new Dog();
     Function&lt;Object, Animal&gt; g = (Object a) -&gt; new Animal();
     Function&lt;? super Animal, ? extends Animal&gt; function = andThen2(f, g);
@@ -608,11 +610,38 @@ Then f o g = Integer =&gt; Integer
 </p></div>
   <hr>
   <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="MoreInterestingStuff" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">More Interesting Stuff<a class=" scalatex-site-Styles-headerLink" href="#MoreInterestingStuff" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
-    <p>
-      Mind You! Some super awesome stuff on the way!</p>
+    <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="NewInstance" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;" id="NewInstance">New Instance<a class=" scalatex-site-Styles-headerLink" href="#NewInstance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
+      <p>
+        There are some strategies that can be helpful to retrieve the runtime information of parametric type:</p>
+      <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class KnowType&lt;T&gt;{
+	private final Class&lt;T&gt; claz;
+	public KnowType(Class&lt;T&gt; claz){
+		this.claz = claz;
+	}
+
+	public Class&lt;T&gt; getTypeInfo(){
+		return claz;
+	}
+}</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/types/KnowType.java#L0-L10" target="_blank"><i class="fa fa-link "></i></a></pre>
+      <pre><code class="scala scalatex-site-Styles-highlightMe">KnowType&lt;Animal&gt; a = new KnowType&lt;Animal&gt;(Animal.class);
+Animal a = a.getTypeInfo().newInstance();</code></pre>
+      <p>
+        <code>Class&lt;T&gt;</code> preserves the information. Please refer <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html">Class</a> api for creating instances with constructors and much more.
+        In case of generic arrays, you can:</p>
+      <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class KnowArray&lt;T&gt;{
+    T[] arr;
+    KnowArray(Class&lt;T&gt; claz){
+        this.arr = (T[]) java.lang.reflect.Array.newInstance(claz,10);
+    }
+    public T[] getArr(){
+        return arr;
+    }
+}</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/types/KnowType.java#L11-L20" target="_blank"><i class="fa fa-link "></i></a></pre>
+
     <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="CaptureType" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;" id="CaptureType">Capture Type<a class=" scalatex-site-Styles-headerLink" href="#CaptureType" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
       <p>
-        Is it possible to obtain <u>information about generic types at runtime?</u>. Well it is possible, but its dirty:
+        Say in cases you cannot obtain parametric type information via above tactics, then there are other ways possible to obtain the same. But it is dirty.
+        It possible to obtain <u>information about generic types at runtime?</u> in some cases:
 </p>
       <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class Outer{
   //Aim is to capture the type of generic type below. i.e. String
@@ -664,42 +693,27 @@ sample.getRawType(); //Will throw exception
 //In this case, you Field.getGenericType() to optaing parametric type information</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/resources/Wontwork.java#L0-L6" target="_blank"><i class="fa fa-link "></i></a></pre>
       <p>
         Please look at the <a href="https://gist.github.com/purijatin/a0486995c7df0e56b398">source</a> to know more. You might also want to look at <a href="https://github.com/jhalterman/typetools">TypeTools</a> which is a library to resolve generic type information declared on a class, method or even lambda.
-        But they use similar techniques as above to obtain the information.</p>
-      <hr />
-      <h1 id="NewInstance" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#NewInstance" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>New Instance</h1>
-        <p>
-          Most of the time, you dont have to go this far to obtain parametric type information. And in cases where you are interested, there is an easy way out:</p>
-        <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class KnowType&lt;T&gt;{
-	private final Class&lt;T&gt; claz;
-	public KnowType(Class&lt;T&gt; claz){
-		this.claz = claz;
-	}
-
-	public Class&lt;T&gt; getTypeInfo(){
-		return claz;
-	}
-}</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/types/KnowType.java#L0-L10" target="_blank"><i class="fa fa-link "></i></a></pre>
-        <pre><code class="scala scalatex-site-Styles-highlightMe">KnowType&lt;Animal&gt; a = new KnowType&lt;Animal&gt;(Animal.class);
-Animal a = a.getTypeInfo().newInstance();</code></pre>
-        <p>
-          <code>Class&lt;T&gt;</code> preserves the information. Please refer <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Class.html">Class</a> api for creating instances with constructors and much more.
-          In case of generic arrays, you can:</p>
-        <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class KnowArray&lt;T&gt;{
-    T[] arr;
-    KnowArray(Class&lt;T&gt; claz){
-        this.arr = (T[]) java.lang.reflect.Array.newInstance(claz,10);
-    }
-    public T[] getArr(){
-        return arr;
-    }
-}</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/java/types/KnowType.java#L11-L20" target="_blank"><i class="fa fa-link "></i></a></pre>
-
+        But they use similar techniques as above to obtain the information.
+</p>
     <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="JavaType-System" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;" id="JavaType-System">Java Type-System<a class=" scalatex-site-Styles-headerLink" href="#JavaType-System" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div>
       <p>
-        Some more general details on Java and JVM's type system capabilities. Java is Nominally Typed.</p>
+        We have hardly scratched the generics surface. The impact of Type-Erasure on Lambdas is quite an interesting one.
+        Hopefully we will cover that sometime in future. For those who cant wait, read <a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-final.html">this</a>.</p>
+      <p>
+        Some random interesting things about Java:</p>
+      <h1 id="Static&amp;Strong" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Static&amp;Strong" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Static &amp; Strong</h1>
+        <p>
+          Java is statically typed. Which means the compiler does not let you do:</p>
+        <pre><code class="scala scalatex-site-Styles-highlightMe">Animal a = &quot;123&quot;;</code></pre>
+        <p>
+          Statically typed means that the compiler wont let you assign data/construct with a type which does not define it. Java is Strongly Typed.
+          This means even at runtime you cannot wrongly assign a type to something it is not:</p>
+        <pre><code class="scala scalatex-site-Styles-highlightMe">Integer i = 23;
+String s = (String) i;
+//ClassCastException. It knows at runtime that it an Int and not a String.</code></pre>
       <h1 id="NominalTyping" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#NominalTyping" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Nominal Typing</h1>
         <p>
-          What it means is:</p>
+          Java is mostly Nominally Typed. What it means is:</p>
         <pre class=" scalatex-site-Styles-hoverContainer"><code class="java scalatex-site-Styles-highlightMe">class City{
     public String getName(){}
 }
@@ -713,7 +727,7 @@ City city;
 Country country;
 storeInDb(country); // compiler error</code><a class=" scalatex-site-Styles-headerLink" style="position: absolute;right: 0.5em;top: 0.5em;display: block;font-size: 24px;" href="https://github.com/purijatin/newsletters/tree/master/scalatex/generics/src/main/resources/TypeSys.java#L0-L12" target="_blank"><i class="fa fa-link "></i></a></pre>
         <p>
-          Even though <code>city</code> and <code>country</code> are exactly the same in construct and meaning, you cannot pass
+          Even though <code>city</code> and <code>country</code> are exactly the same in class body and meaning, you cannot pass
           country to <code>storeInDb</code>. This is because the method argument is nominal to take only City. Basically,
           class names inside objects are part of what it means to be an object. Class name information inside an object is called its nominal information.
           To emphasize the fact that objects in class-based OOP have class names as part of their meaning they are sometimes called nominal objects.
@@ -733,17 +747,8 @@ BinaryOperator&lt;Integer&gt; a3 = (x, y) -&gt; Integer.compare(x, y);</code></p
         <p>
           You can assign any Functional Interface based on the structure of lambda. The evolution and design of lambdas is quite interesting,
           especially after the influence of Type-Erasure. <a href="http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-final.html">This</a> is a very very good read.
+
 </p>
-      <h1 id="Static&amp;Strong" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#Static&amp;Strong" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Static &amp; Strong</h1>
-        <p>
-          Java is statically typed. Which means the compiler does not let you do:</p>
-        <pre><code class="scala scalatex-site-Styles-highlightMe">Animal a = &quot;123&quot;;</code></pre>
-        <p>
-          Statically typed means that the compiler wont let you assign data/construct with a type which does not define it. Java is Strongly Typed.
-          This means even at runtime you cannot wrongly assign a type to something it is not:</p>
-        <pre><code class="scala scalatex-site-Styles-highlightMe">Integer i = 23;
-String s = (String) i;
-//ClassCastException. It knows at runtime that it an Int and not a String.</code></pre>
         <h2 id="TypeInference" style="display: block;" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><a class=" scalatex-site-Styles-headerLink" href="#TypeInference" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a>Type Inference</h2>
           <p>
             Type Inference refers to the abiliy to deduce the type of a datatype or an expression automatically. Java Compiler
@@ -758,7 +763,8 @@ Collections.max(Arrays.asList(1,2,3),(x,y) -&gt; Integer.compare(x,y));
           <p>
             Many functional languages go very far to infer types. Even to an extent that you do not specify types anywhere in your program.
             Interested people should have a look at <a href="http://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system">Hindley-Miler Type System</a>. It has been extremely influentional in type system of
-            ML, OCaml, Haskell, F# etc.</p></div></hr>
+            ML, OCaml, Haskell, F# etc.
+</p></div></hr>
 <div style="margin: 0px;color: #333;text-align: center;padding: 2.5em 2em 0;border-bottom: 1px solid #eee;display: block;" id="References" class=" scalatex-site-Styles-hoverContainer scalatex-site-Styles-headerTag"><h1 style="margin: 0.2em 0;font-size: 3em;font-weight: 300;">References<a class=" scalatex-site-Styles-headerLink" href="#References" style="position: absolute;right: 0px;"><i class="fa fa-link"></i></a></h1><br /></div><div class=" scalatex-site-Styles-content">
     <p>
       <ul>
@@ -775,17 +781,16 @@ Collections.max(Arrays.asList(1,2,3),(x,y) -&gt; Integer.compare(x,y));
         <li>
           <a href="http://cr.openjdk.java.net/~jrose/values/values-0.html">http://cr.openjdk.java.net/~jrose/values/values-0.html</a></li>
         <li>
-          <a href="http://cr.openjdk.java.net/~briangoetz/valhalla/specialization.html">http://cr.openjdk.java.net/~briangoetz/valhalla/specialization.html</a></li></ul></p>
-    <hr />
-</div>
+          <a href="http://cr.openjdk.java.net/~briangoetz/valhalla/specialization.html">http://cr.openjdk.java.net/~briangoetz/valhalla/specialization.html</a></li></ul></p></div>
+ <hr>
   <footer>
     <div style="opacity: 0.6;font-style: oblique;">
       <p>
         This booklet has been generated using <a href="https://github.com/lihaoyi/Scalatex">Scalatex</a> developed by <a href="https://github.com/lihaoyi">Li Haoyi</a>. You might want to look at it. Its easier to setup than <a href="http://jekyllrb.com/">Jekyll</a> and certainly more expressive than Wordpress. And provides compile time <i>like</i> type safety.
-</p></div></footer>
+</p></div></footer></hr>
 </div><script>
     scalatex.scrollspy.Controller().main(
-      [{"value":"Polymorphism","children":[]},{"value":"Generics","children":[{"value":"Type Erasure","children":[]},{"value":"Reification","children":[]}]},{"value":"Sub-Typing (<:)","children":[{"value":"Liskov Substitution","children":[]}]},{"value":"Variance","children":[{"value":"Co-Variance","children":[]},{"value":"Contra-Variance","children":[]},{"value":"In-Variance","children":[]},{"value":"Wildcards (?)","children":[]}]},{"value":"Case-Studies","children":[{"value":"Co-Variant Arrays","children":[]},{"value":"Writes & Reads","children":[{"value":"Writes","children":[]},{"value":"Reads","children":[]}]},{"value":"Library Examples","children":[{"value":"ArrayList","children":[{"value":"foreach","children":[]},{"value":"addAll","children":[]}]},{"value":"Collections.min","children":[]},{"value":"Collections.copy","children":[]},{"value":"Object.getClass","children":[]}]},{"value":"Function","children":[]}]},{"value":"More Interesting Stuff","children":[{"value":"Capture Type","children":[{"value":"New Instance","children":[]}]},{"value":"Java Type-System","children":[{"value":"Nominal Typing","children":[]},{"value":"Static & Strong","children":[{"value":"Type Inference","children":[]}]}]}]},{"value":"References","children":[]}]
+      [{"value":"Polymorphism","children":[]},{"value":"Generics","children":[{"value":"Type Erasure","children":[]},{"value":"Reification","children":[]}]},{"value":"Sub-Typing (<:)","children":[{"value":"Liskov Substitution","children":[]}]},{"value":"Variance","children":[{"value":"Co-Variance","children":[]},{"value":"Contra-Variance","children":[]},{"value":"In-Variance","children":[]},{"value":"Wildcards (?)","children":[]}]},{"value":"Case-Studies","children":[{"value":"Co-Variant Arrays","children":[]},{"value":"Writes & Reads","children":[{"value":"Writes","children":[]},{"value":"Reads","children":[]}]},{"value":"Library Examples","children":[{"value":"ArrayList","children":[{"value":"foreach","children":[]},{"value":"addAll","children":[]}]},{"value":"Collections.min","children":[]},{"value":"Collections.copy","children":[]},{"value":"Object.getClass","children":[]}]},{"value":"Function","children":[]}]},{"value":"More Interesting Stuff","children":[{"value":"New Instance","children":[]},{"value":"Capture Type","children":[]},{"value":"Java Type-System","children":[{"value":"Static & Strong","children":[]},{"value":"Nominal Typing","children":[{"value":"Type Inference","children":[]}]}]}]},{"value":"References","children":[]}]
   )</script><script>
     ['DOMContentLoaded', 'load'].forEach(function(ev){
       addEventListener(ev, function(){
