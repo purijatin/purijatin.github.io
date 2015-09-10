@@ -328,17 +328,181 @@ layout: false
 
 - Rich Hikey
 
-- Functional Programming Language
+- Functional Programming Language. Probably most functional one on JVM
 
-```clojure
-(defn square [x]
-  (* x x))
-```
+- Dynamic Programming Language (Also has a compiler)
 
 - Runs on JVM, CLR, JS Engines
 
+- Transactional Memory System
+
+- If you are a LISP guy, this is your calling!
+
+- Recommend reading [this](http://www.paulgraham.com/avg.html) article by Paul Graham
+
 
 ]
+---
+layout: false
+.left-column[
+  ## Clojure
+]
+.right-column[
+  LISP on JVM
+
+- Functions as `truly` first class citizens
+```clojure
+(defn square [x]
+  (* x x))
+(map (fn [x] square array)
+```
+- Lazy Data structures
+
+- REPL
+
+- Designed for Concurrency: STM, Immutability
+
+- Recursive Looping
+]
+
+---
+layout: false
+.left-column[
+  ## Clojure
+]
+.right-column[
+  LISP on JVM
+
+- Macros - If Java had this, you didn't have to wait for 17 years for lambdas.
+
+```C
+for(i=0 ;i<10; i++)
+```
+```clojure
+(defmacro for-loop [[sym init check change :as params] & steps]
+  (cond
+    (not (vector? params)) 
+      (throw (Error. "Binding form must be a vector for for-loop"))
+    (not= 4 (count params)) 
+      (throw (Error. "Binding form must have exactly 4 arguments in for-loop"))
+    :default
+      `(loop [~sym ~init value# nil] (if ~check (let [new-value# (do ~@steps)]  (recur ~change new-value#)) value#))))
+```
+Usage:
+```clojure
+(for-loop [i 0, (< i 10), (inc i)]
+  (println i))
+```
+(source [http://stackoverflow.com/a/10435150/894565])
+]
+
+
+]
+---
+
+class: center, middle, inverse
+
+##Groovy
+
+
+---
+
+.left-column[
+  ## Groovy
+]
+
+.right-column[
+
+- OO and Functional 
+- Dynamic Language with static-typing compilation
+- Seamless integration with Java
+```groovy
+names = ["hello", "world"]
+shortNames = names.findAll{it.size() < 4}
+shortNames.each{println it}
+```
+- From Pivotel
+- No semicolons
+- Return keyword optional
+```groovy
+String toString() { return "Groovy" }
+String toString() { "Groovy" }
+```
+- Omitting parentheses
+
+```groovy
+println "Hello"
+method a, b
+```
+is equivalent to
+
+```groovy
+println("Hello")
+method(a, b)
+```
+]
+
+---
+- Public by default
+
+So instead of:
+
+```groovy
+public class Server {
+    public String toString() { return "a server" }
+}
+```
+Prefer the more concise:
+
+```groovy
+class Server {
+    String toString() { "a server" }
+}
+```
+
+- Getters and Setters
+
+```groovy
+class Person {
+    private String name
+    String getName() { return name }
+    void setName(String name) { this.name = name }
+}
+```
+is equivalent to
+
+```groovy
+class Person {
+    String name
+}
+```
+
+---
+
+.left-column[
+  ## Groovy
+]
+.right-column[
+- First-class functions
+
+- Higher-order functions
+
+- Map, reduce, filter,
+
+- Mutable and Immutable
+
+- Recursion
+
+- Lazy and eager evaluation
+]
+
+--- 
+---
+
+class: center, middle, inverse
+
+ ##Grails
+
 ---
 
 class: center, middle, inverse
@@ -347,22 +511,16 @@ class: center, middle, inverse
 Concise, simple and very easy to read (and write)
 
 ---
-
-
 .left-column[
   ## Kotlin
 ]
 
 
 .right-column[
+- JetBrains
 - Statically-typed programming language
-
 - Runs on the Java Virtual Machine. Can be compiled to JavaScript source code
-
 - Concise, Safe, Versatile, Interoperable
-
-- In addition to the classes and methods (called member functions in Kotlin) of object-oriented programming, Kotlin also supports procedural programming with the use of functions.
-
 ```kotlin
 fun main(args : Array<String>) 
 {
@@ -370,30 +528,17 @@ fun main(args : Array<String>)
   println("Hello, $scope!")
 }
 ```
-]
-
----
-## Concise
-
-Create a POJO with getters, setters, equals(), hashCode(), toString() and copy() in a single line:
-
+- Concise. Creates a POJO with getters, setters, equals(), hashCode(), toString() and copy() in a single line:
 ```kotlin
 data class Employee(val name: String, val email: String, val company: String)
-
 ```
-Or filter a list using a lambda expression:
-
-```kotlin
-val positiveNumbers = list.filter {it > 0}
-```
-
-Want a singleton? Create an object:
-
+- Singleton
 ```kotlin
 object ThisIsASingleton {
   val companyName: String = "D. E. Shaw & Co."
 }
 ```
+]
 
 ---
 ## Null Safety
@@ -423,80 +568,6 @@ val l = b.length() // error: variable 'b' can be null
 ```
 
 ---
-
-class: center, middle, inverse
-
-##Groovy
-
-
----
-
-.left-column[
-  ## Groovy
-]
-
-.right-column[
-
-- No semicolons
-
-- Return keyword optional
-
-```groovy
-String toString() { return "Groovy" }
-String toString() { "Groovy" }
-```
-
-- Public by default
-
-So instead of:
-
-```groovy
-public class Server {
-    public String toString() { return "a server" }
-}
-```
-Prefer the more concise:
-
-```groovy
-class Server {
-    String toString() { "a server" }
-}
-```
-]
-
----
-- Omitting parentheses
-
-```groovy
-println "Hello"
-method a, b
-```
-is equivalent to
-
-```groovy
-println("Hello")
-method(a, b)
-```
-
-- Getters and Setters
-
-```groovy
-class Person {
-    private String name
-    String getName() { return name }
-    void setName(String name) { this.name = name }
-}
-```
-is equivalent to
-
-```groovy
-class Person {
-    String name
-}
-```
-
-
-
 
 
 
