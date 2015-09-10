@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+class: center, middle, inverse
+
+
+## Most people talk about Java the language, and this may sound odd coming from me, but I could hardly care less. 
+
+.footnote[[James Gosling](https://youtu.be/JluAg5ylgWE)]
+
+---
+
+class: center, middle, inverse
+
+## At the core of the Java ecosystem is the JVM!
+
+---
+layout: false
+class: center, middle, inverse
+
+## JVM
+Big Deal?
+
+---
+
+layout: false
+.left-column[
+  ## Fun Facts
+]
+.right-column[
+  Did you know that in JVM:
+
+- new Object() in HotSpot 1.5 proved to be 1.5-3x faster than malloc. Approximately 10 machine instructions.
+
+- 1000GB RAM or Rasberry Pi. JVM optimized for both. (GIL? Pauseless GC?)
+
+- Big Data? Hadoop, Apache Spark, Apache Storm, Cassandra, Finagle, Lucene etc.
+
+- No better scalable platform as of date! (Java9 [Milestones](http://openjdk.java.net/projects/jdk9/))
+
+- JVM byte code
+]
+
+---
+layout: false
+class: center, middle
+![alt text](spark.png "Be grateful for JVM")
+
+(Sort Challenge [http://sortbenchmark.org/](http://sortbenchmark.org/))
+
+---
+layout: false
+class: center, middle
+
+#Blender
+https://blog.twitter.com/2011/twitter-search-now-3x-faster
+
+![alt text](blender.png "Be grateful for JVM")
+
+---
+layout: false
+class: center, middle, inverse
+
+## So JVM is awesome. 
+But isn't Java 20 years old?
+
+---
+
+layout: false
+.left-column[
+  ## Best of both worlds
+]
+.right-column[
+  What if we could leverage upon JVM but provide better syntactic sugar than Java?
+
+- But we can do only what byte can allow us.
+
+- JVM sets the rules! (Thank your greater gods that check/unchecked exceptions is not a VM property. Nor generics were reified)
+
+- Strongly typed. 
+
+- Which means Nominal typing
+```java
+public void doAwesome(Animal animal){}
+```
+- But still good enough to do some serious stuff. invokeDynamic
+]
+
+---
+
+layout: false
+class: center, middle
+
+#It works!
+
+![alt text](jvm_languages.jpg "Be grateful for JVM")
+.footnote[Xamarin]
+
+---
+
+class: center, middle, inverse
+
+## If I were to pick a language to use today other than Java, it would be Scala.
+
+.footnote[James Gosling]
+
+
+---
+layout: false
+.left-column[
+  ## Scala
+]
+.right-column[
+  Named as synonym for `Scalability`
+
+- Mardin Odersky
+
+- A multi-paradigm language for the JVM
+
+  Object oriented (State)
+
+```scala
+class Calculator(brand: String) {
+  def add(m: Int, n: Int): Int = m + n
+}
+
+class ScientificCalculator(brand: String)
+  extends Calculator(brand) {
+    def log(m: Double, base: Double) =
+      math.log(m) / math.log(base)
+}
+```
+
+  Functional (Behavior)
+
+```scala
+Stream.from(1).filterNot(_ % 2 == 0).map { i =>
+  i * i
+}
+```
+
+- Cutting edge as far as compiler research is concerned.
+
+]
+
+---
+
+.left-column[  
+  ## Scala?
+]
+.right-column[
+### A few of Scala's language features
+
+* Java interoperability
+* Mixin composition
+* Singleton objects
+* Local Type Inference
+  * Do not have to specify manual types in 90% of cases
+* Generics (with variance)
+```scala
+val ls = List(new Dog(), new Cat())
+```
+* Higher-order functions
+* Higher-kinded types  (Java has unary types)
+```scala
+trait Container[M[_]] { def put[A](x: A): M[A]; }
+val container = new Container[List] { def put[A](x: A) = List(x)}
+container.put("hey")  
+res24: List[java.lang.String] = List(hey)
+```
+] 
+
+---
+layout:false
+.left-column[  
+  ## Scala?
+]
+.right-column[
+### A few of Scala's language features
+
+* Type classes
+```scala
+def add[T](ls:List[T])(implicit e: Numeric[T]) = ls.sum
+```
+* Implicit values and conversions
+* Monadic for-comprehensions
+* Pattern matching
+* Structural types
+* Existential types
+* Path-dependent types
+* Macros
+* Runs on JVM and Javascript engines
+.footnote[Has been a commercial success]
+] 
+
+--- 
+
+---
+
+class: center, middle, inverse
+
+##Clojure
+LISP dialect for JVM
+
+---
+layout: false
+.left-column[
+  ## Clojure
+]
+.right-column[
+  LISP on JVM
+
+- Rich Hikey
+
+- Functional Programming Language
+
+```clojure
+(defn square [x]
+  (* x x))
+```
+
+- Runs on JVM, CLR, JS Engines
+
+
+]
+---
+
+class: center, middle, inverse
+
+##Kotlin
+Concise, simple and very easy to read (and write)
+
+---
+
+
+.left-column[
+  ## Kotlin
+]
+
+
+.right-column[
+- Statically-typed programming language
+
+- Runs on the Java Virtual Machine. Can be compiled to JavaScript source code
+
+- Concise, Safe, Versatile, Interoperable
+
+- In addition to the classes and methods (called member functions in Kotlin) of object-oriented programming, Kotlin also supports procedural programming with the use of functions.
+
+```kotlin
+fun main(args : Array<String>) 
+{
+  val scope = "world"
+  println("Hello, $scope!")
+}
+```
+]
+
+---
+## Concise
+
+Create a POJO with getters, setters, equals(), hashCode(), toString() and copy() in a single line:
+
+```kotlin
+data class Employee(val name: String, val email: String, val company: String)
+
+```
+Or filter a list using a lambda expression:
+
+```kotlin
+val positiveNumbers = list.filter {it > 0}
+```
+
+Want a singleton? Create an object:
+
+```kotlin
+object ThisIsASingleton {
+  val companyName: String = "D. E. Shaw & Co."
+}
+```
+
+---
+## Null Safety
+
+```kotlin
+var a: String = "abc"
+a = null // compilation error
+```
+
+To allow nulls, we can declare a variable as nullable string, written String?:
+
+```kotlin
+var b: String? = "abc"
+b = null // ok
+```
+
+Now, if you call a method on a, it’s guaranteed not to cause an NPE, so you can safely say
+
+```kotlin
+val l = a.length()
+```
+
+But if you want to call the same method on b, that would not be safe, and the compiler reports an error:
+
+```kotlin
+val l = b.length() // error: variable 'b' can be null
+```
+
+---
+
+class: center, middle, inverse
+
+##Groovy
+
+
+---
+
+.left-column[
+  ## Groovy
+]
+
+.right-column[
+
+- No semicolons
+
+- Return keyword optional
+
+```groovy
+String toString() { return "Groovy" }
+String toString() { "Groovy" }
+```
+
+- Public by default
+
+So instead of:
+
+```groovy
+public class Server {
+    public String toString() { return "a server" }
+}
+```
+Prefer the more concise:
+
+```groovy
+class Server {
+    String toString() { "a server" }
+}
+```
+]
+
+---
+- Omitting parentheses
+
+```groovy
+println "Hello"
+method a, b
+```
+is equivalent to
+
+```groovy
+println("Hello")
+method(a, b)
+```
+
+- Getters and Setters
+
+```groovy
+class Person {
+    private String name
+    String getName() { return name }
+    void setName(String name) { this.name = name }
+}
+```
+is equivalent to
+
+```groovy
+class Person {
+    String name
+}
+```
+
+
+
+
+
+
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>.footnote[Xamarin]
+
+---
