@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        font-family: 'Droid Serif';
+      }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+      .remark-slide-content h1 { font-size: 3em; }
+      .remark-slide-content h2 { font-size: 2em; }
+      .remark-slide-content h3 { font-size: 1.6em; }
+      .footnote {
+        bottom: 3em;
+      }
+      li p { line-height: 1.25em; }
+      .red { color: #fa0000; }
+      .large { font-size: 2em; }
+      a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+      }
+      code {
+        background: #e7e8e2;
+        border-radius: 5px;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code-line-highlighted     { background-color: #373832; }
+      .pull-left {
+        float: left;
+        width: 47%;
+      }
+      .pull-right {
+        float: right;
+        width: 47%;
+      }
+      .pull-right ~ p {
+        clear: both;
+      }
+      #slideshow .slide .content code {
+        font-size: 0.8em;
+      }
+      #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+      }
+      .inverse {
+        background: #103a51;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+      }
+      .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+      }
+
+      /* Slide-specific styling */
+      #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+      }
+      #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+      }
+      #slide-how .slides h3 {
+        margin-top: 0.2em;
+      }
+      #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+      }
+      #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+      }
+      #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+      }
+
+      /* Two-column layout */
+      .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+      }
+        .left-column h2:last-of-type, .left-column h3:last-child {
+          color: #000;
+        }
+      .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+class: center, middle, inverse
+
+![Scala](http://www.scala-lang.org/resources/img/smooth-spiral.png "Scala") 
+
+#Fast Track to Scala
+
+
+@purijatin7[](https://twitter.com/purijatin7)
+
+---
+
+class: middle
+
+##BDD using ScalaTest
+
+```scala
+class ExampleSpec extends FlatSpec with Matchers {
+
+  "A Stack" should "pop values in last-in-first-out order" in {
+    val stack = new Stack[Int]
+    stack.push(1)        
+    stack.push(2)        
+    stack.pop() should be (2)
+    stack.pop() should be (1)
+  }
+
+  it should "throw NoSuchElementException if an empty stack is popped" in {
+    val emptyStack = new Stack[Int]
+    a [NoSuchElementException] should be thrownBy emptyStack.pop()    
+  }
+}
+```
+
+---
+
+class: middle
+
+##Spray
+
+```scala
+startServer(interface = "localhost", port = 8080) {
+    path("hello") {
+      get {
+        complete {
+          <h1>Say hello to spray</h1>
+        }
+      }
+    } ~
+    path("orders") {
+      authenticate(BasicAuth(realm = "admin area")) { user =>
+        get {
+          cache(simpleCache) {
+            encodeResponse(Deflate) {
+              complete {
+                // marshal custom object with in-scope marshaller
+                getOrdersFromDB
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+```
+
+---
+
+class: middle
+##Scala implementation of BASIC
+
+```scala
+   object Lunar extends Baysick {
+      def main(args:Array[String]) = {
+        10 PRINT "Welcome to Baysick Lunar Lander v0.0.1"
+        20 LET ('dist := 100)
+        30 LET ('v := 1)
+        40 LET ('fuel := 1000)
+        50 LET ('mass := 1000)
+
+        60 PRINT "You are a in control of a lunar lander."
+        70 PRINT "You are drifting towards the surface of the moon."
+        80 PRINT "Each turn you must decide how much fuel to burn."
+        90 PRINT "To accelerate enter a positive number, to decelerate a negative"
+
+        100 PRINT "Distance " % 'dist % "km, " % "Velocity " % 'v % "km/s, " % "Fuel " % 'fuel
+        110 INPUT 'burn
+        120 IF ABS('burn) <= 'fuel THEN 150
+        130 PRINT "You don't have that much fuel"
+        140 GOTO 100
+        150 LET ('v := 'v + 'burn * 10 / ('fuel + 'mass))
+        160 LET ('fuel := 'fuel - ABS('burn))
+        170 LET ('dist := 'dist - 'v)
+        180 IF 'dist > 0 THEN 100
+        190 PRINT "You have hit the surface"
+        200 IF 'v < 3 THEN 240
+        210 PRINT "Hit surface too fast (" % 'v % ")km/s. Crashed!!"    
+        220 GOTO 250
+        230 PRINT "Well done"
+        240 END
+        RUN
+      }
+    }
+```
+.footnote[[https://github.com/fogus/baysick](https://github.com/fogus/baysick)]
+
+---
+
+class: center
+
+![Star Wars Comics](https://upload.wikimedia.org/wikipedia/en/f/f9/Star_Wars_001_1977.jpeg "Star Wars")
+
+Total number of Standard Issues: 1,033
+
+---
+
+
+class: middle
+
+##Get the # of pages of the biggest Issue 
+.center[(big by number of pages)]
+```java
+    /**
+     * Returns the size of the biggest comic (by number of pages)
+     * @param books List of Comics
+     * @return Integer - Number of pages of comic with maximum pages
+     */
+    public static Future<Integer> getAsyncMaxHits(List<StarWarsComic> comics) throws Exception {
+      ....
+    }
+```
+---
+
+class: middle
+
+##Pre Java8 World
+```java
+public static Future<Integer> getAsyncMaxHits(List<StarWarsComic> comics) throws Exception {
+        if (books.isEmpty())
+            throw new IllegalArgumentException();
+        ArrayList<Future<Integer>> futures = new ArrayList<>();
+        for (Book comic : comics) {
+            futures.add(executor.submit(new Callable<Integer>() {
+                @Override
+                public Integer call() throws Exception {
+                    return comic.getNumberOfPages();
+                }
+            }));
+        }
+
+        return new FutureTask<>(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int max = -1;
+                for (Future<Integer> future : futures) {
+                    int num = future.get();
+                    if (num > max)
+                        max = num;
+                }
+                return max;
+            }
+        });
+    }
+
+```
+---
+
+class: middle
+
+##Java8
+```java
+    public static Future<Integer> getAsyncMaxHits2(List<Book> books) throws Exception {
+        if (books.isEmpty())
+            throw new IllegalArgumentException();
+
+        List<CompletableFuture<Integer>> futures = books
+                .stream()
+                .map(x -> CompletableFuture.supplyAsync(x::getNumberOfPages, executor))
+                .collect(Collectors.toList());
+
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(
+                      futures.toArray(new CompletableFuture[books.size()]));
+        
+        return allOf.thenApply(x -> futures.stream().map(y -> {
+            try {
+                return y.get();
+            } catch (Exception e) {
+                throw new RuntimeException();
+            }
+        }).max(Integer::max).get());
+    }
+
+
+```
+---
+class: middle
+
+##Scala
+```scala
+  import scala.concurrent.ExecutionContext.Implicits.global
+  
+  def getAsyncMaxHits(comics: List[StarWarsComic]):Future[Int] = {
+    val futures = for(i<- comics) yield Future{i.getNumberOfPages}
+    Future.sequence(futures).map(x => x.max)
+  }
+```
+
+---
+
+layout: false
+.left-column[
+  ## Fun Facts
+]
+.right-column[
+  Did you know that in JVM:
+
+- new Object() in HotSpot 1.5 proved to be 1.5-3x faster than malloc. Approximately 10 machine instructions.
+
+- 1000GB RAM or Rasberry Pi. JVM optimized for both. (GIL? Pauseless GC?)
+
+- Big Data? Hadoop, Apache Spark, Apache Storm, Cassandra, Finagle, Lucene etc.
+
+- No better scalable platform as of date! (Java9 [Milestones](http://openjdk.java.net/projects/jdk9/))
+
+- JVM byte code
+]
+
+---
+
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+        highlightStyle: 'idea'
+      });
+    </script>
+  </body>
+</html>
+
+---
