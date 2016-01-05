@@ -96,9 +96,10 @@
 
       /* Two-column layout */
       .left-column {
-        color: #777;
+        color: #ccd6dd;
         width: 20%;
-        height: 92%;
+        font-size: 12pt;
+        /*height: 92%;*/
         float: left;
       }
         .left-column h2:last-of-type, .left-column h3:last-child {
@@ -126,6 +127,26 @@ class: center, middle, inverse
 @purijatin7[](https://twitter.com/purijatin7)
 
 ---
+
+layout: false
+.left-column[
+  ## Overview
+]
+.right-column[
+Some Background:
+  
+- Working primarily in Scala since 2012
+
+- Minor contributor to Scala [Macros](http://scalamacros.org/paperstalks/2014-06-17-EasyMetaprogrammingForEveryone.pdf#page=62)
+
+- 12.5k points on [Stackoverflow](http://stackoverflow.com/users/894565/jatin) primarily in Scala
+
+- Very Involved with community (SIP, SLIP, gitter channels, google groups etc)
+
+]
+
+---
+
 
 class: middle
 
@@ -155,26 +176,29 @@ class: middle
 
 ##Spray
 
-```scala
+```js
 startServer(interface = "localhost", port = 8080) {
     path("hello") {
       get {
         complete {
-          <h1>Say hello to spray</h1>
+          <html>
+            <body>
+              Hello <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program">World!</a>
+            </body>
+          </html>
         }
       }
-    } ~
+    } 
+    ~
     path("orders") {
       authenticate(BasicAuth(realm = "admin area")) { user =>
         get {
-          cache(simpleCache) {
-            encodeResponse(Deflate) {
-              complete {
+          cache(simpleCache) {     
+            complete {
                 // marshal custom object with in-scope marshaller
                 getOrdersFromDB
-              }
             }
-          }
+          }          
         }
       }
     }
@@ -186,41 +210,39 @@ startServer(interface = "localhost", port = 8080) {
 
 class: middle
 ##Scala implementation of BASIC
+[https://github.com/fogus/baysick](https://github.com/fogus/baysick)
 
 ```scala
    object Lunar extends Baysick {
       def main(args:Array[String]) = {
-        10 PRINT "Welcome to Baysick Lunar Lander v0.0.1"
-        20 LET ('dist := 100)
-        30 LET ('v := 1)
-        40 LET ('fuel := 1000)
-        50 LET ('mass := 1000)
+        10 LET ('dist := 100)
+        20 LET ('v := 1)
+        30 LET ('fuel := 1000)
+        40 LET ('mass := 1000)
+        50 PRINT "You are a in control of a lunar lander."
+        60 PRINT "You are drifting towards the surface of the moon."
+        70 PRINT "Each turn you must decide how much fuel to burn."
+        80 PRINT "To accelerate enter a positive number, to decelerate a negative"
 
-        60 PRINT "You are a in control of a lunar lander."
-        70 PRINT "You are drifting towards the surface of the moon."
-        80 PRINT "Each turn you must decide how much fuel to burn."
-        90 PRINT "To accelerate enter a positive number, to decelerate a negative"
+        90 PRINT "Distance " % 'dist % "km, " % "Velocity " % 'v % "km/s, " % "Fuel " % 'fuel
+        100 INPUT 'burn
+        110 IF ABS('burn) <= 'fuel THEN 150
+        120 PRINT "You don't have that much fuel"
+        130 GOTO 100
+        140 LET ('v := 'v + 'burn * 10 / ('fuel + 'mass))
+        150 LET ('fuel := 'fuel - ABS('burn))
+        160 LET ('dist := 'dist - 'v)
+        170 IF 'dist > 0 THEN 100
+        180 PRINT "You have hit the surface. Crashed!"        
+        190 GOTO 230
+        200 PRINT "Well done"
+        210 END
 
-        100 PRINT "Distance " % 'dist % "km, " % "Velocity " % 'v % "km/s, " % "Fuel " % 'fuel
-        110 INPUT 'burn
-        120 IF ABS('burn) <= 'fuel THEN 150
-        130 PRINT "You don't have that much fuel"
-        140 GOTO 100
-        150 LET ('v := 'v + 'burn * 10 / ('fuel + 'mass))
-        160 LET ('fuel := 'fuel - ABS('burn))
-        170 LET ('dist := 'dist - 'v)
-        180 IF 'dist > 0 THEN 100
-        190 PRINT "You have hit the surface"
-        200 IF 'v < 3 THEN 240
-        210 PRINT "Hit surface too fast (" % 'v % ")km/s. Crashed!!"    
-        220 GOTO 250
-        230 PRINT "Well done"
-        240 END
         RUN
       }
     }
 ```
-.footnote[[https://github.com/fogus/baysick](https://github.com/fogus/baysick)]
+
 
 ---
 
@@ -254,31 +276,31 @@ class: middle
 ##Pre Java8 World
 ```java
 public static Future<Integer> getAsyncMaxHits(List<StarWarsComic> comics) throws Exception {
-        if (books.isEmpty())
-            throw new IllegalArgumentException();
-        ArrayList<Future<Integer>> futures = new ArrayList<>();
-        for (Book comic : comics) {
-            futures.add(executor.submit(new Callable<Integer>() {
-                @Override
-                public Integer call() throws Exception {
-                    return comic.getNumberOfPages();
-                }
-            }));
-        }
-
-        return new FutureTask<>(new Callable<Integer>() {
-            @Override
+    if (comics.isEmpty())
+        throw new IllegalArgumentException();
+    ArrayList<Future<Integer>> futures = new ArrayList<>();
+    for (StarWarsComic comic : comics) {
+        futures.add(executor.submit(new Callable<Integer>() {
+          @Override
             public Integer call() throws Exception {
-                int max = -1;
-                for (Future<Integer> future : futures) {
-                    int num = future.get();
-                    if (num > max)
-                        max = num;
-                }
-                return max;
+                return comic.getNumberOfPages();
             }
-        });
+        }));
     }
+
+    return executor.submit(new Callable<Integer>() {
+        @Override
+        public Integer call() throws Exception {
+            int max = -1;
+            for (Future<Integer> future : futures) {
+                int num = future.get();
+                if (num > max)
+                    max = num;
+            }
+            return max;
+        }
+    });
+}
 
 ```
 ---
@@ -287,28 +309,24 @@ class: middle
 
 ##Java8
 ```java
-    public static Future<Integer> getAsyncMaxHits2(List<Book> books) throws Exception {
-        if (books.isEmpty())
-            throw new IllegalArgumentException();
+public static Future<Integer> getAsyncMaxHits2(List<StarWarsComic> comics) throws Exception {
+    if (comics.isEmpty())
+        throw new IllegalArgumentException();
+    List<CompletableFuture<Integer>> futures = comics
+            .stream()
+            .map(x -> CompletableFuture.supplyAsync(x::getNumberOfPages, executor))
+            .collect(Collectors.toList());
 
-        List<CompletableFuture<Integer>> futures = books
-                .stream()
-                .map(x -> CompletableFuture.supplyAsync(x::getNumberOfPages, executor))
-                .collect(Collectors.toList());
-
-        CompletableFuture<Void> allOf = CompletableFuture.allOf(
-                      futures.toArray(new CompletableFuture[books.size()]));
-        
-        return allOf.thenApply(x -> futures.stream().map(y -> {
-            try {
-                return y.get();
-            } catch (Exception e) {
-                throw new RuntimeException();
-            }
-        }).max(Integer::max).get());
-    }
-
-
+    CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[comics.size()]));
+ 
+    return allOf.thenApply(x -> futures.stream().map(y -> {
+        try {
+            return y.get();
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }).max(Integer::max).get());
+}
 ```
 ---
 class: middle
@@ -317,34 +335,237 @@ class: middle
 ```scala
   import scala.concurrent.ExecutionContext.Implicits.global
   
-  def getAsyncMaxHits(comics: List[StarWarsComic]):Future[Int] = {
+  def getAsyncMaxHits(comics: List[StarWarsComic]) : Future[Int] = {
     val futures = for(i<- comics) yield Future{i.getNumberOfPages}
     Future.sequence(futures).map(x => x.max)
   }
 ```
 
 ---
+class: middle, center, inverse
+  #Abstractions
+  #Syntactic Sugar
 
-layout: false
-.left-column[
-  ## Fun Facts
-]
-.right-column[
-  Did you know that in JVM:
-
-- new Object() in HotSpot 1.5 proved to be 1.5-3x faster than malloc. Approximately 10 machine instructions.
-
-- 1000GB RAM or Rasberry Pi. JVM optimized for both. (GIL? Pauseless GC?)
-
-- Big Data? Hadoop, Apache Spark, Apache Storm, Cassandra, Finagle, Lucene etc.
-
-- No better scalable platform as of date! (Java9 [Milestones](http://openjdk.java.net/projects/jdk9/))
-
-- JVM byte code
-]
+.footnote[![as](https://pbs.twimg.com/media/Bwy8o0cCMAESRBc.jpg)]
 
 ---
 
+.left-column[
+  ## Intro  
+  ## Scala? 
+]
+.right-column[
+Elevator Pitch:
+  - Its fun
+  - Its fast
+  - It runs on a great VM (JVM)
+  - Multi-Paradigm ([Grand Unified Theory](http://www.drdobbs.com/architecture-and-design/interview-with-scalas-martin-odersky/231001802))
+      * Pure-bred Object Oriented      
+      * Functional 
+  - Seamless interoperability with Java
+  - Statically typed, yet feels like dynamic
+    ```scala
+    val ls = List(1,2,3) 
+    //`ls` is automatically inferred as `List[Int]`
+
+    val animals = List(new Cat, new Dog)
+    //`animals` is automatically inferred as `List[Animal]`
+
+    def func = if(skyIsBlue) new Dog else new Cat
+    //return type of `func` is automatically inferred as `Animal`
+
+    //Compiler is your friend. Not a baggage
+  ```
+]
+
+
+---
+
+.left-column[
+  ## Intro  
+  ## Scala
+  ## Pitch
+]
+.right-column[
+Scala
+  - REPL
+      <img src="repl.png" alt="REPL" width="100%"/>
+
+  - Stress on Immutability
+  ```scala
+    package scala.collection.immutable //default
+    package scala.collection.mutable
+  ```
+
+  - Nominal Typing yet flavors of Structural
+  ```scala
+   def quacker(duck: {def quack(value: String): String}) {
+      println (duck.quack("Quack"))
+  }
+  quacker("hi")//compiler error  
+  ```
+
+ 
+]
+---
+
+
+.left-column[
+  ## Intro  
+  ## Scala
+  ## Pitch
+]
+.right-column[
+
+  - Traits
+    ```scala
+    abstract class Animal
+
+      class Bird extends Animal {
+        def fly: String = "I am flying!"
+      }
+      trait Swimmer {
+        def swim: String = "I am swimming!"
+      }
+
+      class Fish extends Animal with Swimmer
+      class Duck extends Bird with Swimmer //mix in
+    ``` 
+
+  - There is more to it:
+
+    ```scala
+      trait Log{
+        def log(msg:String) = println(msg)
+      }
+      trait Cache{ log: Log =>
+        //...
+      }
+
+      class A extends Cache // compiler error
+      class A extends Cache with Log
+
+    ```
+]
+---
+
+
+.left-column[
+  ## Intro  
+  ## Scala
+  ## Pitch
+]
+.right-column[
+Scala
+  - Functions as First Class Citizens
+  ```scala
+    def func(f : Int => String) = f(1)
+
+    def toStr(n:Int) = n.toString
+    func(toStr)
+
+    func((x:Int) => x.toString)
+
+  ```
+  - Currying
+  ```scala
+    def sum(a:Int)(b:Int) = a + b
+
+    val partial: (Int => Int) = sum(1)
+    partial(2) //returns 3
+  ```  
+]
+---
+
+
+.left-column[
+  ## Intro  
+  ## Scala
+  ## Pitch
+]
+.right-column[
+Syntactic Sugar
+  - case class
+  
+  ```scala
+      case class Person(var name:String, var num:Int)
+  ```
+  ----
+  ```java
+      public class Person {
+        public Person(String, int); //constructor
+        
+        public String getName();
+        public String setName(String name);
+        public String getNum();
+        public String setNum(int num);
+        public int hashCode();
+        public String toString();
+        public boolean equals(Object);
+        public Person copy(java.lang.String, int);
+        //Person("Steven",1).copy(name = "Gerrard")
+        //...
+    }
+
+  ```
+]
+---
+.left-column[
+  ## Intro
+  ## Scala
+  ## Pitch
+]
+.right-column[
+Not Sold yet?
+### A few of Scala's language features
+
+* Java interoperability
+* Singleton objects
+* Generics (with variance)
+* Type classes
+* Implicit values and conversions
+* Monadic for-comprehensions
+* Pattern matching
+* By Name Parameters
+* Flexibility with Access Modifiers
+* Structural types
+* Existential types
+* Path-dependent types
+* Macros
+* Value Classes
+] 
+
+---
+.left-column[
+  ## Intro
+  ## Scala
+  ## Pitch
+  ## PotHoles
+]
+.right-column[
+PotHoles
+  - Not Backward Compatible (Will change in future)
+  - Slow Compilation speed
+  - With great power comes ...
+    ```scala
+    //Lots of ways to do everything
+    //All below are equivalent
+    val inc1 = (i: Int) => i + 1
+    val inc2 = (_: Int) + 1
+    val inc3: Int => Int = _ + 1
+    val inc4: Int ⇒ Int = _ + 1
+    val inc5 = new Function1[Int, Int] {
+    def apply(i: Int) = i + 1
+    ```
+  - Steep learning curve (If from non-functional programming background)
+
+] 
+
+
+---
+
+
+---
 
 
     </textarea>
