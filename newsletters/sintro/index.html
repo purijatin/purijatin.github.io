@@ -362,21 +362,10 @@ Elevator Pitch:
   - Multi-Paradigm ([Grand Unified Theory](http://www.drdobbs.com/architecture-and-design/interview-with-scalas-martin-odersky/231001802))
       * Pure-bred Object Oriented      
       * Functional 
-  - Commercially has done decent. Encouraging Signs
-  - Seamless interoperability with Java
-  - Statically typed, yet feels like dynamic
-    ```scala
-    val ls = List(1,2,3) 
-    //`ls` is automatically inferred as `List[Int]`
-
-    val animals = List(new Cat, new Dog)
-    //`animals` is automatically inferred as `List[Animal]`
-
-    def func = if(skyIsBlue) new Dog else new Cat
-    //return type of `func` is automatically inferred as `Animal`
-
-    //Compiler is your friend. Not a baggage
-  ```
+  - Commercially has done decent. Encouraging Signs  
+  - REPL
+      <img src="repl.png" alt="REPL" width="100%"/>
+  - Seamless interoperability with Java  
   - Scala.js
 ]
 
@@ -390,8 +379,19 @@ Elevator Pitch:
 ]
 .right-column[
 Scala
-  - REPL
-      <img src="repl.png" alt="REPL" width="100%"/>
+  - Statically typed, yet feels like dynamic
+    ```scala
+    val ls = List(1,2,3) 
+    //`ls` is automatically inferred as `List[Int]`
+
+    val animals = List(new Cat, new Dog)
+    //`animals` is automatically inferred as `List[Animal]`
+
+    def func = if(skyIsBlue) new Dog else new Cat
+    //return type of `func` is automatically inferred as `Animal`
+
+    //Compiler is your friend. Not a baggage
+  ```
 
   - Stress on Immutability
   ```scala
@@ -467,9 +467,13 @@ Scala
     func(toStr)
 
     func((x:Int) => x.toString)
+  
+    List(1,2,3) map (x => x*x) //returns List(1,4,9)
 
   ```
+
   - Currying
+
   ```scala
     def sum(a:Int)(b:Int) = a + b
 
@@ -510,6 +514,14 @@ Syntactic Sugar
     }
 
   ```
+  - Tuples
+    ```scala
+      scala> (1,"hi")
+      res9: (Int, String) = (1,hi)
+
+      scala> (1,"hi",new Cat)
+      res11: (Int, String, Cat) = (1,hi,Cat@7a247711)
+    ```
 ]
 ---
 .left-column[
@@ -523,7 +535,6 @@ Not Sold yet?
 
 * Java interoperability
 * Singleton objects
-* Tuples
 * Generics (with variance)
 * Type classes
 * Implicit values and conversions
@@ -561,13 +572,27 @@ PotHoles
     def apply(i: Int) = i + 1
     ```
   - Steep learning curve (If from non-functional programming background)
+  - Thou shalt `Never try calling Scala code from Java`
 
 ] 
 
-
-
 ---
 
+class:  middle, inverse
+
+##"But I don't want to go among mad people," Alice remarked.
+
+##"Oh, you can't help that," said the Cat: "we're all mad here. I'm mad. You're mad."
+
+##"How do you know I'm mad?" said Alice.
+
+##"You must be," said the Cat, "or you wouldn't have come here."
+
+--Lewis Carroll, "Alice's Adventures in Wonderland"
+
+----------
+
+####.center[I have started to enjoy programming again!]
 
     </textarea>
     <script src="remark-latest.min.js">
@@ -580,4 +605,3 @@ PotHoles
   </body>
 </html>
 
----
