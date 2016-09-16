@@ -121,7 +121,7 @@ class: center, middle, inverse
 
 ![Scala](smooth-spiral.png "Scala") 
 
-#Fast Track to Scala
+#Pitch for Scala
 
 
 @purijatin7[](https://twitter.com/purijatin7)
@@ -143,8 +143,7 @@ Some Background:
 
 - Very Involved with community (SIP, SLIP, gitter channels, google groups etc)
 
-- Lightbend Scala Trainer/Consultant
-
+- Trainer/Consultant with Lightbend Inc
 ]
 
 ---
@@ -319,7 +318,8 @@ public static Future<Integer> getAsyncMaxHits2(List<StarWarsComic> comics) throw
             .map(x -> CompletableFuture.supplyAsync(x::getNumberOfPages, executor))
             .collect(Collectors.toList());
 
-    CompletableFuture<Void> allOf = CompletableFuture.allOf(futures.toArray(new CompletableFuture[comics.size()]));
+    CompletableFuture<Void> allOf = CompletableFuture.allOf(
+		      futures.toArray(new CompletableFuture[comics.size()]));
  
     return allOf.thenApply(x -> futures.stream().map(y -> {
         try {
