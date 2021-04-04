@@ -123,8 +123,8 @@
           problem <a href="#p10">P10</a>, construct its uncompressed
           version.
           <p>Example:</p>
-  <pre>> decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
-  res0: List[Symbol] = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)</pre></dd>
+  <pre>> p12:decode([{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]).
+    [a,a,a,a,b,c,c,a,a,d,e,e,e,e]</pre></dd>
   
         <dt id="p13"><strong><a href="solutions/p13.erl">P13</a> (**)
             Run-length encoding of a list (direct solution).</strong></dt>
@@ -133,34 +133,33 @@
           (like <a href="#p09">P09</a>'s <code>pack</code>); do all the work
           directly.
           <p>Example:</p>
-  <pre>> encodeDirect(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
-  res0: List[(Int, Symbol)] = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))</pre></dd>
+  <pre>> p13:encodeDirect(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']).
+    [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]</pre></dd>
   
         <dt id="p14"><strong><a href="solutions/p14.erl">P14</a> (*)
             Duplicate the elements of a list.</strong></dt>
         <dd>Example:
-  <pre>> duplicate(List('a, 'b, 'c, 'c, 'd))
-  res0: List[Symbol] = List('a, 'a, 'b, 'b, 'c, 'c, 'c, 'c, 'd, 'd)</pre></dd>
+  <pre>> p14:duplicate([1,2,3,4]).   
+    [1,1,2,2,3,3,4,4]</pre></dd>
   
         <dt id="p15"><strong><a href="solutions/p15.erl">P15</a> (**)
             Duplicate the elements of a list a given number of times.</strong></dt>
         <dd>Example:
-  <pre>> duplicateN(3, List('a, 'b, 'c, 'c, 'd))
-  res0: List[Symbol] = List('a, 'a, 'a, 'b, 'b, 'b, 'c, 'c, 'c, 'c, 'c, 'c, 'd, 'd, 'd)</pre></dd>
+  <pre>> p15:duplicateN(3, ['a','b','c']).
+    [a,a,a,b,b,b,c,c,c]</pre></dd>
   
         <dt id="p16"><strong><a href="solutions/p16.erl">P16</a> (**)
             Drop every <i>N</i>th element from a list.</strong></dt>
         <dd>Example:
-  <pre>> drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-  res0: List[Symbol] = List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k)</pre></dd>
+  <pre>> p16:drop(3, [1,2,3,4,5,6,7,8]).
+    [1,2,4,5,7,8]</pre></dd>
   
         <dt id="p17"><strong><a href="solutions/p17.erl">P17</a> (*)
             Split a list into two parts.</strong></dt>
-        <dd>The length of the first part is given.  Use a Tuple for your
-          result.
+        <dd>The length of the first part is given.  
         <p>Example:</p>
-  <pre>> split(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-  res0: (List[Symbol], List[Symbol]) = (List('a, 'b, 'c),List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k))</pre></dd>
+  <pre>> p17:split(3, [1,2,3,4,5,6,7]).
+    [[1,2,3],[4,5,6,7]]</pre></dd>
   
         <dt id="p18"><strong><a href="solutions/p18.erl">P18</a> (**)
             Extract a slice from a list.</strong></dt>
@@ -169,8 +168,11 @@
           up to but not including the <i>K</i>th element of the original
           list.  Start counting the elements with 0.
           <p>Example:</p>
-  <pre>> slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-  res0: List[Symbol] = List('d, 'e, 'f, 'g)</pre></dd>
+  <pre>> p18:slice(3,7, [1,2,3,4,5,6,7,8,9,10]).
+    [4,5,6,7]
+
+> p18:slice(3,7, [1,2,3,4]).    
+[4]</pre></dd>
   
         <dt id="p19"><strong><a href="solutions/p19.erl">P19</a> (**)
             Rotate a list <i>N</i> places to the left.</strong></dt>
