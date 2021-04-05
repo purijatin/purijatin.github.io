@@ -177,25 +177,24 @@
         <dt id="p19"><strong><a href="solutions/p19.erl">P19</a> (**)
             Rotate a list <i>N</i> places to the left.</strong></dt>
         <dd>Examples:
-  <pre>> rotate(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-  res0: List[Symbol] = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
-  
-  > rotate(-2, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
-  res1: List[Symbol] = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)</pre></dd>
+  <pre>>p19:rotate(3, [1,2,3,4,5,6,7]). 
+    [4,5,6,7,1,2,3]
+    > p19:rotate(-3, [1,2,3,4,5,6,7]).
+    [5,6,7,1,2,3,4]</pre></dd>
   
         <dt id="p20"><strong><a href="solutions/p20.erl">P20</a> (*)
             Remove the <i>K</i>th element from a list.</strong></dt>
         <dd>Return the list and the removed element in a Tuple.  Elements
             are numbered from 0.
         <p>Example:</p>
-  <pre>> removeAt(1, List('a, 'b, 'c, 'd))
-  res0: (List[Symbol], Symbol) = (List('a, 'c, 'd),'b)</pre></dd>
+  <pre>> p20:removeAt(3, [1,2,3,4,5,6]).
+    {[1,2,3,5,6],4}</pre></dd>
   
         <dt id="p21"><strong><a href="solutions/p21.erl">P21</a> (*)
             Insert an element at a given position into a list.</strong></dt>
         <dd>Example:
-  <pre>> insertAt('new, 1, List('a, 'b, 'c, 'd))
-  res0: List[Symbol] = List('a, 'new, 'b, 'c, 'd)</pre></dd>
+  <pre>> p21:insertAt(3, 2, [1,2,4,5,6]).
+    [1,2,3,4,5,6]</pre></dd>
   
         <dt id="p22"><strong><a href="solutions/p22.erl">P22</a> (*)
             Create a list containing all integers within a given range.</strong></dt>
