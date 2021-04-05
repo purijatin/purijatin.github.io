@@ -267,8 +267,8 @@
           according to their length.  E.g. short lists first, longer lists
           later, or vice versa.
           <p>Example:</p>
-  <pre>> lsort(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))
-  res0: List[List[Symbol]] = List(List('o), List('d, 'e), List('d, 'e), List('m, 'n), List('a, 'b, 'c), List('f, 'g, 'h), List('i, 'j, 'k, 'l))</pre>
+  <pre>> p28:lsort([[1,2,3],[1,2],[1],[2],[1,2,3,4]]).
+    [[2],[1],[1,2],[1,2,3],[1,2,3,4]]</pre>
   
           <p>b) Again, we suppose that a list contains elements that are
             lists themselves.  But this time the objective is to sort the
@@ -277,8 +277,8 @@
             lengths are placed, others with a more frequent length come
             later.</p>
           <p>Example:</p>
-  <pre>> lsortFreq(List(List('a, 'b, 'c), List('d, 'e), List('f, 'g, 'h), List('d, 'e), List('i, 'j, 'k, 'l), List('m, 'n), List('o)))
-  res1: List[List[Symbol]] = List(List('i, 'j, 'k, 'l), List('o), List('a, 'b, 'c), List('f, 'g, 'h), List('d, 'e), List('d, 'e), List('m, 'n))</pre>
+  <pre>> p28:lsortFreq([[1,2,3],[1,2],[1],[2],[2,3],[3]]).
+    [[1,2,3],[2,3],[1,2],[3],[2],[1]]</pre>
   
           <p>Note that in the above example, the first two lists in the
             result have length 4 and 1 and both lengths appear just once.
