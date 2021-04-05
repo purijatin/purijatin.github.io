@@ -12,8 +12,8 @@
       Applied Sciences in Berne, Switzerland.  I
       (<a href="http://twitter.com/purijatin7">Jatin Puri</a>) have altered them
       to be more amenable to programming in
-      Erlang.  <a href="mailto:purijatin@gmail.com">Feedback is appreciated</a>,
-      particularly on anything marked TODO.</p>This HTML template is a fork of the Scala-99 problems by
+      Erlang.  <a href="mailto:purijatin@gmail.com">Feedback is appreciated</a></p>
+      This HTML template is a fork of the Scala-99 problems by
       Phil Gold, whose original source can be found at <a href="http://aperiodic.net/phil/scala/s-99/">http://aperiodic.net/phil/scala/s-99/</a>
   
       <p>The problems have different levels of difficulty.  Those marked
@@ -24,10 +24,8 @@
       <p>Solutions are available by clicking on the link at the beginning of
       the problem description.</p>
   
-      <p>[I don't have example solutions to all of the problems yet.  I'm
-      working on getting them all done, but in the meantime, contributed
-      solutions, particularly from seasoned Scala programmers would be
-      appreciated.  If you feel a particular problem can be solved in a
+      <p>[I don't have example solutions to all of the problems yet.  Only the first 40 have been solved till now.
+       If you feel a particular problem can be solved in a
       better manner than I did, please let me know that, too.  &lt;<a
       href="mailto:purijatin@gmail.com">purijatin @ gmail . com</a>&gt;]</p>
   
@@ -290,20 +288,12 @@
   
       <h2 id="math">Arithmetic</h2>
   
-      <p>For the next section, we're going to take a different tack with
-        the solutions.  We'll declare a new class, <code>S99Int</code>, and
-        an implicit conversion from regular <code>Int</code>s.
-        The <a href="arithmetic1.erl">arithmetic1</a> file contains the
-        starting definitions for this section.  Each individual solution
-        will show the relevant additions to the <code>S99Int</code> class.
-        The full class will be given at the end of the section.</p>
-  
       <dl>
         <dt id="p31"><strong><a href="solutions/p31.erl">P31</a> (**)
             Determine whether a given integer number is prime.</strong></dt>
         <dd>
-  <pre>> 7.isPrime
-  res0: Boolean = true</pre></dd>
+  <pre>> p31:isprime(7).
+    true</pre></dd>
   
         <dt id="p32"><strong><a href="solutions/p32.erl">P32</a> (**)
             Determine the greatest common divisor of two positive integer
@@ -317,8 +307,8 @@
             coprime.</strong></dt>
         <dd>Two numbers are coprime if their greatest common divisor equals
           1.
-  <pre>> 35.isCoprimeTo(64)
-  res0: Boolean = true</pre></dd>
+  <pre>> p33:coprime(32, 33).
+    true</pre></dd>
   
         <dt id="p34"><strong><a href="solutions/p34.erl">P34</a> (**)
             Calculate Euler's totient function <code>phi(m)</code>.</strong></dt>
@@ -326,26 +316,23 @@
           defined as the number of positive integers
           <i>r</i> (1 &lt;= <i>r</i> &lt;= <i>m</i>) that are coprime
           to <i>m</i>.
-  <pre>> 10.totient
-  res0: Int = 4</pre></dd>
+  <pre>> p34:totient(10).
+    4</pre></dd>
   
         <dt id="p35"><strong><a href="solutions/p35.erl">P35</a> (**)
             Determine the prime factors of a given positive integer. </strong></dt>
         <dd>Construct a flat list containing the prime factors in ascending
           order.
-  <pre>> 315.primeFactors
-  res0: List[Int] = List(3, 3, 5, 7)</pre></dd>
+  <pre>> p35:primeFactors(315).
+    [3,3,5,7]</pre></dd>
   
         <dt id="p36"><strong><a href="solutions/p36.erl">P36</a> (**)
             Determine the prime factors of a given positive integer (2).</strong></dt>
-        <dd>Construct a list containing the prime factors and their
+        <dd>Construct a map containing the prime factors and their
           multiplicity.
-  <pre>> 315.primeFactorMultiplicity
-  res0: List[(Int, Int)] = List((3,2), (5,1), (7,1))</pre>
-  
-          <p>Alternately, use a Map for the result.</p>
-  <pre>> 315.primeFactorMultiplicity
-  res0: Map[Int,Int] = Map(3 -> 2, 5 -> 1, 7 -> 1)</pre></dd>
+  <pre>> p36:primeFactorMultiplicity(315).
+    #{3 => 2,5 => 1,7 => 1}</pre>
+  </dd>
   
         <dt id="p37"><strong><a href="solutions/p37.erl">P37</a> (**)
             Calculate Euler's totient function phi(m) (improved).</strong></dt>
