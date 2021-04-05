@@ -199,29 +199,29 @@
         <dt id="p22"><strong><a href="solutions/p22.erl">P22</a> (*)
             Create a list containing all integers within a given range.</strong></dt>
         <dd>Example:
-  <pre>> range(4, 9)
-  res0: List[Int] = List(4, 5, 6, 7, 8, 9)</pre></dd>
+  <pre>> p22:range(3, 7).
+    [3,4,5,6,7]</pre></dd>
   
         <dt id="p23"><strong><a href="solutions/p23.erl">P23</a> (**)
             Extract a given number of randomly selected elements from a list.</strong></dt>
         <dd>Example:
-  <pre>> randomSelect(3, List('a, 'b, 'c, 'd, 'f, 'g, 'h))
-  res0: List[Symbol] = List('e, 'd, 'a)</pre>
+  <pre>> p23:randomSelect(3, [1,2,3,4,5,6,7,8]).
+    [3,6,2]</pre>
   
         <p>Hint: Use the solution to problem <a href="#p20">P20</a></dd>
   
         <dt id="p24"><strong><a href="solutions/p24.erl">P24</a> (*)
             Lotto: Draw <i>N</i> different random numbers from the set 1..<i>M</i>.</strong></dt>
         <dd>Example:
-  <pre>> lotto(6, 49)
-  res0: List[Int] = List(23, 1, 17, 33, 21, 37)</pre></dd>
+  <pre>> p24:lotto(3, 49).
+    [38,43,20]</pre></dd>
   
         <dt id="p25"><strong><a href="solutions/p25.erl">P25</a> (*)
             Generate a random permutation of the elements of a list.</strong></dt>
         <dd>Hint: Use the solution of problem <a href="#p23">P23</a>.
           <p>Example:</p>
-  <pre>> randomPermute(List('a, 'b, 'c, 'd, 'e, 'f))
-  res0: List[Symbol] = List('b, 'a, 'd, 'c, 'e, 'f)</pre></dd>
+  <pre>> p25:randomPermute([1,2,3,4,5,6,7]).
+    [3,1,5,4,6,7,2]</pre></dd>
   
         <dt id="p26"><strong><a href="solutions/p26.erl">P26</a> (**)
             Generate the combinations of <i>K</i> distinct objects chosen
