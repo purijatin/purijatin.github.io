@@ -32,19 +32,19 @@
       <h2 id="lists">Working with lists</h2>
    
       <dl>
-        <dt id="p01"><strong><a href="solutions/p01.erl.txt">P01</a> (*)
+        <dt id="p01"><strong><a href="txt/p01.erl.txt">P01</a> (*)
             Find the last element of a list.</strong></dt>
         <dd>Example:
   <pre>> p01:last([1,2,3,34,234,2,423,423,4]).
   4</pre></dd>
   
-        <dt id="p02"><strong><a href="solutions/p02.erl">P02</a> (*)
+        <dt id="p02"><strong><a href="txt/p02.erl.txt">P02</a> (*)
             Find the last but one element of a list.</strong></dt>
         <dd>Example:
   <pre>> p02:penultimate(List(1, 1, 2, 3, 5, 8))
   5</pre></dd>
   
-        <dt id="p03"><strong><a href="solutions/p03.erl">P03</a> (*)
+        <dt id="p03"><strong><a href="txt/p03.erl.txt">P03</a> (*)
             Find the <i>K</i>th element of a list.</strong></dt>
         <dd>By convention, the first element in the list is element
           0.
@@ -53,31 +53,31 @@
   <pre>> p03:kth([0, 1, 2, 3], 2).
   2</pre></dd>
   
-        <dt id="p04"><strong><a href="solutions/p04.erl">P04</a> (*)
+        <dt id="p04"><strong><a href="txt/p04.erl.txt">P04</a> (*)
             Find the number of elements of a list.</strong></dt>
         <dd>Example:
   <pre>> p04:len([1,2,3]).
     3</pre></dd>
   
-        <dt id="p05"><strong><a href="solutions/p05.erl">P05</a> (*)
+        <dt id="p05"><strong><a href="txt/p05.erl.txt">P05</a> (*)
             Reverse a list.</strong></dt>
         <dd>Example:
   <pre>> p05:reverse([1,2,3,4]).
     [4,3,2,1]</pre></dd>
   
-        <dt id="p06"><strong><a href="solutions/p06.erl">P06</a> (*)
+        <dt id="p06"><strong><a href="txt/p06.erl.txt">P06</a> (*)
             Find out whether a list is a palindrome.</strong></dt>
         <dd>Example:
   <pre>> p06:is_palindrome([1,2,3,2,1]).
     true</pre></dd>
   
-        <dt id="p07"><strong><a href="solutions/p07.erl">P07</a> (**)
+        <dt id="p07"><strong><a href="txt/p07.erl.txt">P07</a> (**)
             Flatten a nested list structure.</strong></dt>
         <dd>Example:
   <pre>> p07:flatten([1,2,[3,[4,[5,6]]]]).           
     [1,2,3,4,5,6]</pre></dd>
   
-        <dt id="p08"><strong><a href="solutions/p08.erl">P08</a> (**)
+        <dt id="p08"><strong><a href="txt/p08.erl.txt">P08</a> (**)
             Eliminate consecutive duplicates of list elements.</strong></dt>
         <dd>If a list contains repeated elements they should be replaced
           with a single copy of the element.  The order of the elements
@@ -86,7 +86,7 @@
   <pre>> p08:compress([1,1,1,2,2,3,4,4,4,4,4,4]). 
     [1,2,3,4]</pre></dd>
   
-        <dt id="p09"><strong><a href="solutions/p09.erl">P09</a> (**)
+        <dt id="p09"><strong><a href="txt/p09.erl.txt">P09</a> (**)
             Pack consecutive duplicates of list elements into sublists.</strong></dt>
         <dd>If a list contains repeated elements they should be placed in
           separate sublists.
@@ -94,7 +94,7 @@
   <pre>> p09:pack(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']).
     [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]</pre></dd>
       
-        <dt id="p10"><strong><a href="solutions/p10.erl">P10</a> (*)
+        <dt id="p10"><strong><a href="txt/p10.erl.txt">P10</a> (*)
             Run-length encoding of a list.</strong></dt>
         <dd>Use the result of problem <a href="#p09">P09</a> to implement
           the so-called run-length encoding data compression method.
@@ -105,7 +105,7 @@
   <pre>> p10:encode(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']).
     [{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]</pre></dd>
   
-        <dt id="p11"><strong><a href="solutions/p11.erl">P11</a> (*)
+        <dt id="p11"><strong><a href="txt/p11.erl.txt">P11</a> (*)
             Modified run-length encoding.</strong></dt>
         <dd>Modify the result of problem <a href="#p10">P10</a> in such a
           way that if an element has no duplicates it is simply copied into
@@ -115,7 +115,7 @@
   <pre>> p11:encodeModified(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']).
     [{4,a},b,{2,c},{2,a},d,{4,e}]</pre></dd>
       
-        <dt id="p12"><strong><a href="solutions/p12.erl">P12</a> (**)
+        <dt id="p12"><strong><a href="txt/p12.erl.txt">P12</a> (**)
             Decode a run-length encoded list.</strong></dt>
         <dd>Given a run-length code list generated as specified in
           problem <a href="#p10">P10</a>, construct its uncompressed
@@ -124,7 +124,7 @@
   <pre>> p12:decode([{4,a},{1,b},{2,c},{2,a},{1,d},{4,e}]).
     [a,a,a,a,b,c,c,a,a,d,e,e,e,e]</pre></dd>
   
-        <dt id="p13"><strong><a href="solutions/p13.erl">P13</a> (**)
+        <dt id="p13"><strong><a href="txt/p13.erl.txt">P13</a> (**)
             Run-length encoding of a list (direct solution).</strong></dt>
         <dd>Implement the so-called run-length encoding data compression
           method directly.  I.e. don't use other methods you've written
@@ -134,32 +134,32 @@
   <pre>> p13:encodeDirect(['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e', 'e', 'e']).
     [[a,a,a,a],[b],[c,c],[a,a],[d],[e,e,e,e]]</pre></dd>
   
-        <dt id="p14"><strong><a href="solutions/p14.erl">P14</a> (*)
+        <dt id="p14"><strong><a href="txt/p14.erl.txt">P14</a> (*)
             Duplicate the elements of a list.</strong></dt>
         <dd>Example:
   <pre>> p14:duplicate([1,2,3,4]).   
     [1,1,2,2,3,3,4,4]</pre></dd>
   
-        <dt id="p15"><strong><a href="solutions/p15.erl">P15</a> (**)
+        <dt id="p15"><strong><a href="txt/p15.erl.txt">P15</a> (**)
             Duplicate the elements of a list a given number of times.</strong></dt>
         <dd>Example:
   <pre>> p15:duplicateN(3, ['a','b','c']).
     [a,a,a,b,b,b,c,c,c]</pre></dd>
   
-        <dt id="p16"><strong><a href="solutions/p16.erl">P16</a> (**)
+        <dt id="p16"><strong><a href="txt/p16.erl.txt">P16</a> (**)
             Drop every <i>N</i>th element from a list.</strong></dt>
         <dd>Example:
   <pre>> p16:drop(3, [1,2,3,4,5,6,7,8]).
     [1,2,4,5,7,8]</pre></dd>
   
-        <dt id="p17"><strong><a href="solutions/p17.erl">P17</a> (*)
+        <dt id="p17"><strong><a href="txt/p17.erl.txt">P17</a> (*)
             Split a list into two parts.</strong></dt>
         <dd>The length of the first part is given.  
         <p>Example:</p>
   <pre>> p17:split(3, [1,2,3,4,5,6,7]).
     [[1,2,3],[4,5,6,7]]</pre></dd>
   
-        <dt id="p18"><strong><a href="solutions/p18.erl">P18</a> (**)
+        <dt id="p18"><strong><a href="txt/p18.erl.txt">P18</a> (**)
             Extract a slice from a list.</strong></dt>
         <dd>Given two indices, <i>I</i> and <i>K</i>, the slice is the list
           containing the elements from and including the <i>I</i>th element
@@ -172,7 +172,7 @@
 > p18:slice(3,7, [1,2,3,4]).    
 [4]</pre></dd>
   
-        <dt id="p19"><strong><a href="solutions/p19.erl">P19</a> (**)
+        <dt id="p19"><strong><a href="txt/p19.erl.txt">P19</a> (**)
             Rotate a list <i>N</i> places to the left.</strong></dt>
         <dd>Examples:
   <pre>>p19:rotate(3, [1,2,3,4,5,6,7]). 
@@ -180,7 +180,7 @@
     > p19:rotate(-3, [1,2,3,4,5,6,7]).
     [5,6,7,1,2,3,4]</pre></dd>
   
-        <dt id="p20"><strong><a href="solutions/p20.erl">P20</a> (*)
+        <dt id="p20"><strong><a href="txt/p20.erl.txt">P20</a> (*)
             Remove the <i>K</i>th element from a list.</strong></dt>
         <dd>Return the list and the removed element in a Tuple.  Elements
             are numbered from 0.
@@ -188,19 +188,19 @@
   <pre>> p20:removeAt(3, [1,2,3,4,5,6]).
     {[1,2,3,5,6],4}</pre></dd>
   
-        <dt id="p21"><strong><a href="solutions/p21.erl">P21</a> (*)
+        <dt id="p21"><strong><a href="txt/p21.erl.txt">P21</a> (*)
             Insert an element at a given position into a list.</strong></dt>
         <dd>Example:
   <pre>> p21:insertAt(3, 2, [1,2,4,5,6]).
     [1,2,3,4,5,6]</pre></dd>
   
-        <dt id="p22"><strong><a href="solutions/p22.erl">P22</a> (*)
+        <dt id="p22"><strong><a href="txt/p22.erl.txt">P22</a> (*)
             Create a list containing all integers within a given range.</strong></dt>
         <dd>Example:
   <pre>> p22:range(3, 7).
     [3,4,5,6,7]</pre></dd>
   
-        <dt id="p23"><strong><a href="solutions/p23.erl">P23</a> (**)
+        <dt id="p23"><strong><a href="txt/p23.erl.txt">P23</a> (**)
             Extract a given number of randomly selected elements from a list.</strong></dt>
         <dd>Example:
   <pre>> p23:randomSelect(3, [1,2,3,4,5,6,7,8]).
@@ -208,20 +208,20 @@
   
         <p>Hint: Use the solution to problem <a href="#p20">P20</a></dd>
   
-        <dt id="p24"><strong><a href="solutions/p24.erl">P24</a> (*)
+        <dt id="p24"><strong><a href="txt/p24.erl.txt">P24</a> (*)
             Lotto: Draw <i>N</i> different random numbers from the set 1..<i>M</i>.</strong></dt>
         <dd>Example:
   <pre>> p24:lotto(3, 49).
     [38,43,20]</pre></dd>
   
-        <dt id="p25"><strong><a href="solutions/p25.erl">P25</a> (*)
+        <dt id="p25"><strong><a href="txt/p25.erl.txt">P25</a> (*)
             Generate a random permutation of the elements of a list.</strong></dt>
         <dd>Hint: Use the solution of problem <a href="#p23">P23</a>.
           <p>Example:</p>
   <pre>> p25:randomPermute([1,2,3,4,5,6,7]).
     [3,1,5,4,6,7,2]</pre></dd>
   
-        <dt id="p26"><strong><a href="solutions/p26.erl">P26</a> (**)
+        <dt id="p26"><strong><a href="txt/p26.erl.txt">P26</a> (**)
             Generate the combinations of <i>K</i> distinct objects chosen
             from the <i>N</i> elements of a list.</strong></dt>
         <dd>In how many ways can a committee of 3 be chosen from a group of 12
@@ -233,7 +233,7 @@
   <pre>> p26:combinations(2, [1,2,3,4]).                           
     [[1,2],[1,3],[1,4],[2,3],[2,4],[3,4]]</pre></dd>
   
-        <dt id="p27"><strong><a href="solutions/p27.erl">P27</a> (**)
+        <dt id="p27"><strong><a href="txt/p27.erl.txt">P27</a> (**)
             Group the elements of a set into disjoint subsets.</strong></dt>
         <dd>a) In how many ways can a group of 9 people work in 3 disjoint
           subgroups of 2, 3 and 4 persons?  Write a function that generates
@@ -258,7 +258,7 @@
             book on discrete mathematics under the term "multinomial
             coefficients".</p></dd>
   
-        <dt id="p28"><strong><a href="solutions/p28.erl">P28</a> (**)
+        <dt id="p28"><strong><a href="txt/p28.erl.txt">P28</a> (**)
             Sorting a list of lists according to length of sublists.</strong></dt>
         <dd>a) We suppose that a list contains elements that are lists
           themselves.  The objective is to sort the elements of the list
@@ -289,20 +289,20 @@
       <h2 id="math">Arithmetic</h2>
   
       <dl>
-        <dt id="p31"><strong><a href="solutions/p31.erl">P31</a> (**)
+        <dt id="p31"><strong><a href="txt/p31.erl.txt">P31</a> (**)
             Determine whether a given integer number is prime.</strong></dt>
         <dd>
   <pre>> p31:isprime(7).
     true</pre></dd>
   
-        <dt id="p32"><strong><a href="solutions/p32.erl">P32</a> (**)
+        <dt id="p32"><strong><a href="txt/p32.erl.txt">P32</a> (**)
             Determine the greatest common divisor of two positive integer
             numbers.</strong></dt>
         <dd>Use Euclid's algorithm.
   <pre>> gcd(36, 63)
   res0: Int = 9</pre></dd>
   
-        <dt id="p33"><strong><a href="solutions/p33.erl">P33</a> (*)
+        <dt id="p33"><strong><a href="txt/p33.erl.txt">P33</a> (*)
             Determine whether two positive integer numbers are
             coprime.</strong></dt>
         <dd>Two numbers are coprime if their greatest common divisor equals
@@ -310,7 +310,7 @@
   <pre>> p33:coprime(32, 33).
     true</pre></dd>
   
-        <dt id="p34"><strong><a href="solutions/p34.erl">P34</a> (**)
+        <dt id="p34"><strong><a href="txt/p34.erl.txt">P34</a> (**)
             Calculate Euler's totient function <code>phi(m)</code>.</strong></dt>
         <dd>Euler's so-called totient function <code>phi(m)</code> is
           defined as the number of positive integers
@@ -319,14 +319,14 @@
   <pre>> p34:totient(10).
     4</pre></dd>
   
-        <dt id="p35"><strong><a href="solutions/p35.erl">P35</a> (**)
+        <dt id="p35"><strong><a href="txt/p35.erl.txt">P35</a> (**)
             Determine the prime factors of a given positive integer. </strong></dt>
         <dd>Construct a flat list containing the prime factors in ascending
           order.
   <pre>> p35:primeFactors(315).
     [3,3,5,7]</pre></dd>
   
-        <dt id="p36"><strong><a href="solutions/p36.erl">P36</a> (**)
+        <dt id="p36"><strong><a href="txt/p36.erl.txt">P36</a> (**)
             Determine the prime factors of a given positive integer (2).</strong></dt>
         <dd>Construct a map containing the prime factors and their
           multiplicity.
@@ -334,7 +334,7 @@
     #{3 => 2,5 => 1,7 => 1}</pre>
   </dd>
   
-        <dt id="p37"><strong><a href="solutions/p37.erl">P37</a> (**)
+        <dt id="p37"><strong><a href="txt/p37.erl.txt">P37</a> (**)
             Calculate Euler's totient function phi(m) (improved).</strong></dt>
         <dd>See problem <a href="#p34">P34</a> for the definition of Euler's
           totient function.  If the list of the prime factors of a
@@ -358,20 +358,20 @@
           <p>Note that <i>a</i><sup><i>b</i></sup> stands for the <i>b</i>th
           power of <i>a</i>.</p></dd>
   
-        <dt id="p38"><strong><a href="solutions/p38.erl">P38</a> (*)
+        <dt id="p38"><strong><a href="txt/p38.erl.txt">P38</a> (*)
             Compare the two methods of calculating Euler's totient function.</strong></dt>
         <dd>Use the solutions of problems <a href="#p34">P34</a>
           and <a href="#p37">P37</a> to compare the algorithms.  Try to
           calculate phi(10090) as an example.</dd><br>
   
-        <dt id="p39"><strong><a href="solutions/p39.erl">P39</a> (*)
+        <dt id="p39"><strong><a href="txt/p39.erl.txt">P39</a> (*)
             A list of prime numbers.</strong></dt>
         <dd>Given a range of integers by its lower and upper limit,
           construct a list of all prime numbers in that range.
   <pre>> listPrimesinRange(7 to 31)
   res0: List[Int] = List(7, 11, 13, 17, 19, 23, 29, 31)</pre></dd>
   
-        <dt id="p40"><strong><a href="solutions/p40.erl">P40</a> (**)
+        <dt id="p40"><strong><a href="txt/p40.erl.txt">P40</a> (**)
             Goldbach's conjecture.</strong></dt>
         <dd>Goldbach's conjecture says that every positive even number
           greater than 2 is the sum of two prime numbers.  E.g. 28 = 5 + 23.
@@ -383,7 +383,7 @@
   <pre>> 28.goldbach
   res0: (Int, Int) = (5,23)</pre></dd>
   
-        <dt id="p41"><strong><a href="solutions/p41.erl">P41</a> (**)
+        <dt id="p41"><strong><a href="txt/p41.erl.txt">P41</a> (**)
             A list of Goldbach compositions.</strong></dt>
         <dd>Given a range of integers by its lower and upper limit, print a
           list of all even numbers and their Goldbach composition.
@@ -407,16 +407,16 @@
   1928 = 61 + 1867</pre></dd>
   
         <p>The file containing the full class for this section
-        is <a href="arithmetic.erl">arithmetic.erl</a>.</p>
+        is <a href="arithmetic.erl.txt">arithmetic.erl</a>.</p>
   
         <h2 id="logic">Logic and Codes</h2>
   
         <p>As in the previous section, we will start with a skeleton file,
-        <a href="logic1.erl">logic1.erl</a>, and add code to it for each
+        <a href="logic1.erl.txt">logic1.erl</a>, and add code to it for each
         problem.  The difference here is that the file starts out almost
         empty.</p>
   
-        <dt id="p46"><strong><a href="solutions/p46.erl">P46</a> (**)
+        <dt id="p46"><strong><a href="txt/p46.erl.txt">P46</a> (**)
             Truth tables for logical expressions.</strong></dt>
         <dd>Define
           functions <code>and</code>, <code>or</code>, <code>nand</code>, <code>nor</code>, <code>xor</code>, <code>impl</code>,
@@ -443,7 +443,7 @@
   false true  false
   false false false</pre></dd>
   
-        <dt id="p47"><strong><a href="solutions/p47.erl">P47</a> (*)
+        <dt id="p47"><strong><a href="txt/p47.erl.txt">P47</a> (*)
             Truth tables for logical expressions (2).</strong></dt>
         <dd>Continue problem <a href="#p46">P46</a> by
         redefining <code>and</code>, <code>or</code>, etc as operators.
@@ -472,7 +472,7 @@
   false false true  true
   false false false true</pre>--></dd>
         
-        <dt id="p49"><strong><a href="solutions/p49.erl">P49</a> (**)
+        <dt id="p49"><strong><a href="txt/p49.erl.txt">P49</a> (**)
             Gray code.</strong></dt>
         <dd>An <i>n</i>-bit Gray code is a sequence of <i>n</i>-bit strings
           constructed according to certain rules. For example,<br>
@@ -488,7 +488,7 @@
           <p>See if you can use memoization to make the function more
           efficient.</p></dd>
   
-        <dt id="p50"><strong><a href="solutions/p50.erl">P50</a> (***)
+        <dt id="p50"><strong><a href="txt/p50.erl.txt">P50</a> (***)
             Huffman code.</strong></dt>
         <dd>First of all, consult a good book on discrete mathematics or
           algorithms for a detailed description of Huffman codes!
@@ -510,7 +510,7 @@
       trees themselves.</p>
   
       <p>We shall use the following classes to represent binary trees.
-        (Also available in <a href="tree1.erl">tree1.erl</a>.)  An End
+        (Also available in <a href="tree1.erl.txt">tree1.erl</a>.)  An End
         is equivalent to an empty tree.  A Branch has a value, and two
         descendant trees.  The <code>toString</code> functions are
         relatively arbitrary, but they yield a more compact output than
@@ -549,7 +549,7 @@
             allow well-formed trees.</strong></dt>
         <dd>Score one for static typing.<br><br></dd>
   
-        <dt id="p55"><strong><a href="solutions/p55.erl">P55</a> (**)
+        <dt id="p55"><strong><a href="txt/p55.erl.txt">P55</a> (**)
             Construct completely balanced binary trees.</strong></dt>
         <dd>In a completely balanced binary tree, the following property
           holds for every node: The number of nodes in its left subtree and
@@ -565,7 +565,7 @@
   <pre>> Tree.cBalanced(4, "x")
   res0: List(Node[String]) = List(T(x T(x . .) T(x . T(x . .))), T(x T(x . .) T(x T(x . .) .)), ...</pre></dd>
   
-        <dt id="p56"><strong><a href="solutions/p56.erl">P56</a> (**)
+        <dt id="p56"><strong><a href="txt/p56.erl.txt">P56</a> (**)
             Symmetric binary trees.</strong></dt>
         <dd>Let us call a binary tree symmetric if you can draw a vertical
           line through the root node and then the right subtree is the
@@ -577,7 +577,7 @@
   <pre>> Node('a', Node('b'), Node('c')).isSymmetric
   res0: Boolean = true</pre></dd>
   
-        <dt id="p57"><strong><a href="solutions/p57.erl">P57</a> (**)
+        <dt id="p57"><strong><a href="txt/p57.erl.txt">P57</a> (**)
             Binary search trees (dictionaries).</strong></dt>
         <dd>Write a function to add an element to a binary search tree.
   <pre>> End.addValue(2)
@@ -614,14 +614,14 @@
   res5: Boolean = false</pre></dd>
   
   
-  <dt id="p58"><strong><a href="solutions/p58.erl">P58</a> (**)
+  <dt id="p58"><strong><a href="txt/p58.erl.txt">P58</a> (**)
       Generate-and-test paradigm.</strong></dt>
   <dd>Apply the generate-and-test paradigm to construct all symmetric,
      completely balanced binary trees with a given number of nodes.
   <pre>> Tree.symmetricBalancedTrees(5, "x")
   res0: List[Node[String]] = List(T(x T(x . T(x . .)) T(x T(x . .) .)), T(x T(x T(x . .) .) T(x . T(x . .))))</pre></dd>
   
-  <dt id="p59"><strong><a href="solutions/p59.erl">P59</a> (**)
+  <dt id="p59"><strong><a href="txt/p59.erl.txt">P59</a> (**)
       Construct height-balanced binary trees.</strong></dt>
   <dd>In a height-balanced binary tree, the following property holds for
       every node: The height of its left subtree and the height of its right
@@ -634,7 +634,7 @@
   <pre>> Tree.hbalTrees(3, "x")
   res0: List[Node[String]] = List(T(x T(x T(x . .) T(x . .)) T(x T(x . .) T(x . .))), T(x T(x T(x . .) T(x . .)) T(x T(x . .) .)), ...</pre></dd>
   
-  <dt id="p60"><strong><a href="solutions/p60.erl">P60</a> (**)
+  <dt id="p60"><strong><a href="txt/p60.erl.txt">P60</a> (**)
       Construct height-balanced binary trees with a given number of nodes.</strong></dt>
   <dd>Consider a height-balanced binary tree of height <i>H</i>.  What is
     the maximum number of nodes it can contain?  Clearly, <i>MaxN</i> =
@@ -658,21 +658,21 @@
   
     <p>Find out how many height-balanced trees exist for <i>N</i> = 15.</p></dd>
   
-  <dt id="p61"><strong><a href="solutions/p61.erl">P61</a> (*)
+  <dt id="p61"><strong><a href="txt/p61.erl.txt">P61</a> (*)
       Count the leaves of a binary tree.</strong></dt>
   <dd>A leaf is a node with no successors.  Write a
     method <code>leafCount</code> to count them.
   <pre>> Node('x', Node('x'), End).leafCount
   res0: Int = 1</pre></dd>
   
-  <dt id="pP61A"><strong><a href="solutions/p61a.erl">61A</a> (*)
+  <dt id="pP61A"><strong><a href="txt/p61a.erl.txt">61A</a> (*)
       Collect the leaves of a binary tree in a list.</strong></dt>
   <dd>A leaf is a node with no successors.  Write a
     method <code>leafList</code> to collect them in a list.
   <pre>> Node('a', Node('b'), Node('c', Node('d'), Node('e'))).leafList
   res0: List[Char] = List(b, d, e)</pre></dd>
   
-  <dt id="p62"><strong><a href="solutions/p62.erl">P62</a> (*)
+  <dt id="p62"><strong><a href="txt/p62.erl.txt">P62</a> (*)
       Collect the internal nodes of a binary tree in a list.</strong></dt>
   <dd>An internal node of a binary tree has either one or two non-empty
     successors.  Write a method <code>internalList</code> to collect them
@@ -680,7 +680,7 @@
   <pre>> Node('a', Node('b'), Node('c', Node('d'), Node('e'))).internalList
   res0: List[Char] = List(a, c)</pre></dd>
   
-  <dt id="p62B"><strong><a href="solutions/p62b.erl">P62B</a> (*)
+  <dt id="p62B"><strong><a href="txt/p62b.erl.txt">P62B</a> (*)
       Collect the nodes at a given level in a list.</strong></dt>
   <dd>A node of a binary tree is at level <i>N</i> if the path from the root
     to the node has length <i>N</i>-1.  The root node is at level 1.  Write a
@@ -693,7 +693,7 @@
       method <code>levelOrder</code> which creates the level-order sequence
       of the nodes.  However, there are more efficient ways to do that.</p></dd>
   
-  <dt id="p63"><strong><a href="solutions/p63.erl">P63</a> (**)
+  <dt id="p63"><strong><a href="txt/p63.erl.txt">P63</a> (**)
       Construct a complete binary tree.</strong></dt>
   <dd>A complete binary tree with height <i>H</i> is defined as follows: The
     levels 1,2,3,...,<i>H</i>-1 contain the maximum number of nodes (i.e
@@ -719,7 +719,7 @@
   <pre>> Tree.completeBinaryTree(6, "x")
   res0: Node[String] = T(x T(x T(x . .) T(x . .)) T(x T(x . .) .))</pre></dd>
   
-  <dt id="p64"><strong><a href="solutions/p64.erl">P64</a> (**)
+  <dt id="p64"><strong><a href="txt/p64.erl.txt">P64</a> (**)
       Layout a binary tree (1).</strong></dt>
   <dd><img align="right" src="p64.gif">As a preparation for drawing a tree,
     a layout algorithm is required to determine the position of each node in
@@ -753,7 +753,7 @@
     with <code>Tree.fromList(List('n','k','m','c','a','h','g','e','u','p','s','q'))</code>.
     Use it to check your code.</p></dd>
   
-  <dt id="p65"><strong><a href="solutions/p65.erl">P65</a> (**)
+  <dt id="p65"><strong><a href="txt/p65.erl.txt">P65</a> (**)
       Layout a binary tree (2).</strong></dt>
   <dd><img align="right" src="p65.gif">An alternative layout method is
     depicted in the illustration opposite.  Find out the rules and write the
@@ -768,7 +768,7 @@
       with <code>Tree.fromList(List('n','k','m','c','a','e','d','g','u','p','q'))</code>.
       Use it to check your code.</p></dd>
   
-  <dt id="p66"><strong><a href="solutions/p66.erl">P66</a> (***)
+  <dt id="p66"><strong><a href="txt/p66.erl.txt">P66</a> (***)
       Layout a binary tree (3).</strong></dt>
   <dd><img align="right" src="p66.gif">Yet another layout strategy is shown
     in the illustration opposite.  The method yields a very compact layout
@@ -785,7 +785,7 @@
   
     <p>Which layout do you like most?</p></dd>
   
-  <dt id="p67"><strong><a href="solutions/p67.erl">P67</a> (**)
+  <dt id="p67"><strong><a href="txt/p67.erl.txt">P67</a> (**)
       A string representation of binary trees.</strong></dt>
   <dd><img align="right" src="p67.gif">Somebody represents binary trees as
     strings of the following type (see example opposite):
@@ -807,7 +807,7 @@
   > Tree.fromString("a(b(d,e),c(,f(g,)))")
   res1: Node[Char] = a(b(d,e),c(,f(g,)))</pre></dd>
   
-  <dt id="p68"><strong><a href="solutions/p68.erl">P68</a> (**)
+  <dt id="p68"><strong><a href="txt/p68.erl.txt">P68</a> (**)
       Preorder and inorder sequences of binary trees.</strong></dt>
   <dd>We consider binary trees with nodes that are identified by single
     lower-case letters, as in the example of
@@ -835,7 +835,7 @@
       Try, for instance, <code>Tree.preInTree(List('a', 'b', 'a'), List('b',
       'a', 'a'))</code>.</p></dd>
   
-  <dt id="p69"><strong><a href="solutions/p69.erl">P69</a> (**)
+  <dt id="p69"><strong><a href="txt/p69.erl.txt">P69</a> (**)
       Dotstring representation of binary trees.</strong></dt>
   <dd>We consider again binary trees with nodes that are identified by
     single lower-case letters, as in the example of
@@ -856,7 +856,7 @@
   </dl>
   
   <p>The file containing the full class definitions for this section
-    is <a href="tree.erl">tree.erl</a>.</p>
+    is <a href="tree.erl.txt">tree.erl</a>.</p>
   
   <h2 id="mtrees">Multiway Trees</h2>
   
@@ -885,21 +885,21 @@
   <code>MTree('a', List(MTree('f', List(MTree('g'))), MTree('c'), MTree('b', List(MTree('d'), MTree('e')))))</code>
   
   <p>The starting code skeleton for this section
-    is <a href="mtree1.erl">mtree1.erl</a>.</p>
+    is <a href="mtree1.erl.txt">mtree1.erl</a>.</p>
   
   <dl>
   <dt id="pP70B"><strong>P70B Omitted; we can only create well-formed
       trees.</strong></dt>
   <dd><br></dd>
   
-  <dt id="pP70C"><strong><a href="solutions/p70c.erl">P70C</a> (*)
+  <dt id="pP70C"><strong><a href="txt/p70c.erl.txt">P70C</a> (*)
       Count the nodes of a multiway tree.</strong></dt>
   <dd>Write a method <code>nodeCount</code> which counts the nodes of a
     given multiway tree.
   <pre>> MTree('a', List(MTree('f'))).nodeCount
   res0: Int = 2</pre></dd>
   
-  <dt id="p70"><strong><a href="solutions/p70.erl">P70</a> (**)
+  <dt id="p70"><strong><a href="txt/p70.erl.txt">P70</a> (**)
       Tree construction from a node string.</strong></dt>
   <dd><img align="right" src="p70.gif">We suppose that the nodes of a
     multiway tree contain single characters.  In the depth-first order
@@ -917,7 +917,7 @@
   <pre>> MTree('a', List(MTree('f', List(MTree('g'))), MTree('c'), MTree('b', List(MTree('d'), MTree('e'))))).toString
   res0: String = afg^^c^bd^e^^^</pre></dd>
       
-  <dt id="p71"><strong><a href="solutions/p71.erl">P71</a> (*)
+  <dt id="p71"><strong><a href="txt/p71.erl.txt">P71</a> (*)
       Determine the internal path length of a tree.</strong></dt>
   <dd>We define the internal path length of a multiway tree as the total sum
     of the path lengths from the root to all nodes of the tree.  By this
@@ -927,7 +927,7 @@
   <pre>> "afg^^c^bd^e^^^".internalPathLength
   res0: Int = 9</pre></dd>
   
-  <dt id="p72"><strong><a href="solutions/p72.erl">P72</a> (*)
+  <dt id="p72"><strong><a href="txt/p72.erl.txt">P72</a> (*)
       Construct the postorder sequence of the tree nodes.</strong></dt>
   <dd>Write a method <code>postorder</code> which constructs the postorder
     sequence of the nodes of a multiway tree.  The result should be
@@ -935,7 +935,7 @@
   <pre>> "afg^^c^bd^e^^^".postorder
   res0: List[Char] = List(g, f, c, d, e, b, a)</pre></dd>
   
-  <dt id="p73"><strong><a href="solutions/p73.erl">P73</a> (**)
+  <dt id="p73"><strong><a href="txt/p73.erl.txt">P73</a> (**)
       Lisp-like tree representation.</strong></dt>
   <dd>There is a particular notation for multiway trees in Lisp.  Lisp is a
     prominent functional programming language.  In Lisp almost everything
@@ -968,7 +968,7 @@
   </dl>
   
   <p>The complete source file for this section
-    is <a href="mtree.erl">mtree.erl</a>.</p>
+    is <a href="mtree.erl.txt">mtree.erl</a>.</p>
   
   <h2 id="graphs">Graphs</h2>
   
@@ -1054,7 +1054,7 @@
   }</pre>
   
   <p>The full initial Graph code, which also includes objects for creating
-    graphs, is in <a href="graph1.erl">graph1.erl</a>.</p>
+    graphs, is in <a href="graph1.erl.txt">graph1.erl</a>.</p>
   
   <p>There are a few ways to create a graph from primitives.
   The <em>graph-term form</em> lists the nodes and edges separately:</p>
@@ -1130,7 +1130,7 @@
   given nodes.</p>
   
   <dl>
-  <dt id="p80"><strong><a href="solutions/p80.erl">P80</a> (***)
+  <dt id="p80"><strong><a href="txt/p80.erl.txt">P80</a> (***)
       Conversions.</strong></dt>
   <dd>Write methods to generate the graph-term and adjacency-list forms
     from a <code>Graph</code>.  Write another method to output the
@@ -1147,7 +1147,7 @@
   > Digraph.fromStringLabel("[p>q/9, m>q/7, k, p>m/5]").toAdjacentForm
   res1: List[(String, List[(String, Int)])] = List((m,List((q,7))), (p,List((m,5), (q,9))), (k,List()), (q,List()))</pre></dd>
   
-  <dt id="p81"><strong><a href="solutions/p81.erl">P81</a> (**)
+  <dt id="p81"><strong><a href="txt/p81.erl.txt">P81</a> (**)
       Path from one node to another one.</strong></dt>
   <dd>Write a method named <code>findPaths</code> to find acyclic paths
     from one node to another in a graph.  The method should return all
@@ -1158,7 +1158,7 @@
   > Digraph.fromStringLabel("[p>q/9, m>q/7, k, p>m/5]").findPaths("p", "k")
   res1: List[List[String]] = List()</pre></dd>
   
-  <dt id="p82"><strong><a href="solutions/p82.erl">P82</a> (*)
+  <dt id="p82"><strong><a href="txt/p82.erl.txt">P82</a> (*)
       Cycle from a given node.</strong></dt>
   <dd>Write a method named <code>findCycles</code> to find closed paths
     (cycles) starting at a given node in a graph.  The method should return
@@ -1166,7 +1166,7 @@
   <pre>> Graph.fromString("[b-c, f-c, g-h, d, f-b, k-f, h-g]").findCycles("f")
   res0: List[List[String]] = List(List(f, c, b, f), List(f, b, c, f))</pre></dd>
   
-  <dt id="p83"><strong><a href="solutions/p83.erl">P83</a> (**)
+  <dt id="p83"><strong><a href="txt/p83.erl.txt">P83</a> (**)
       Construct all spanning trees.</strong></dt>
   <dd><img align="right" src="p83.gif">Write a
     method <code>spanningTrees</code> to construct all spanning trees of a
@@ -1186,7 +1186,7 @@
   <pre>> Graph.fromString("[a-b, b-c, a-c]").spanningTrees
   res0: List[Graph[String,Unit]] = List([a-b, b-c], [a-c, b-c], [a-b, a-c])</pre></dd>
   
-  <dt id="p84"><strong><a href="solutions/p84.erl">P84</a> (**)
+  <dt id="p84"><strong><a href="txt/p84.erl.txt">P84</a> (**)
       Construct the minimal spanning tree.</strong></dt>
   <dd><img align="right" src="p84.gif">Write a
     method <code>minimalSpanningTree</code> to construct the minimal
@@ -1204,7 +1204,7 @@
   <pre>> Graph.fromStringLabel("[a-b/1, b-c/2, a-c/3]").minimalSpanningTree
   res0: Graph[String,Int] = [a-b/1, b-c/2]</pre></dd>
   
-  <dt id="p85"><strong><a href="solutions/p85.erl">P85</a> (**)
+  <dt id="p85"><strong><a href="txt/p85.erl.txt">P85</a> (**)
       Graph isomorphism.</strong></dt>
   <dd>Two
     graphs <i>G</i><sub>1</sub>(<i>N</i><sub>1</sub>,<i>E</i><sub>1</sub>)
@@ -1218,7 +1218,7 @@
   <pre>> Graph.fromString("[a-b]").isIsomorphicTo(Graph.fromString("[5-7]"))
   res0: Boolean = true</pre></dd>
   
-  <dt id="p86"><strong><a href="solutions/p86.erl">P86</a> (**)
+  <dt id="p86"><strong><a href="txt/p86.erl.txt">P86</a> (**)
       Node degree and graph coloration.</strong></dt>
   <dd>a) Write a method <code>Node.degree</code> that determines the degree
     of a given node. 
@@ -1240,7 +1240,7 @@
     <pre>> Graph.fromString("[a-b, b-c, a-c, a-d]").colorNodes
   res2: List[(Graph[String,Unit]#Node,Int)] = List((Node(a),1), (Node(b),2), (Node(c), 3), (Node(d), 2))</pre></dd>
   
-  <dt id="p87"><strong><a href="solutions/p87.erl">P87</a> (**)
+  <dt id="p87"><strong><a href="txt/p87.erl.txt">P87</a> (**)
       Depth-first order graph traversal.</strong></dt>
   <dd>Write a method that generates a depth-first order graph traversal
     sequence.  The starting point should be specified, and the output
@@ -1250,13 +1250,13 @@
   <pre>> Graph.fromString("[a-b, b-c, e, a-c, a-d]").nodesByDepthFrom("d")
   res0: List[String] = List(c, b, a, d)</pre></dd>
   
-  <dt id="p88"><strong><a href="solutions/p88.erl">P88</a> (**)
+  <dt id="p88"><strong><a href="txt/p88.erl.txt">P88</a> (**)
       Connected components.</strong></dt>
   <dd>Write a function that splits a graph into its connected components.
   <pre>> Graph.fromString("[a-b, c]").splitGraph
   res0: List[Graph[String,Unit]] = List([a-b], [c])</pre></dd>
   
-  <dt id="p89"><strong><a href="solutions/p89.erl">P89</a> (**)
+  <dt id="p89"><strong><a href="txt/p89.erl.txt">P89</a> (**)
       Bipartite graphs.</strong></dt>
   <dd>Write a function that determines whether a given graph is
     bipartite.
@@ -1275,12 +1275,12 @@
   </dl>
   
   <p>The complete source file for this section
-    is <a href="graph.erl">graph.erl</a>.</p>
+    is <a href="graph.erl.txt">graph.erl</a>.</p>
   
   <h2 id="misc">Miscellaneous Problems</h2>
   
   <dl>
-  <dt id="p90"><strong><a href="solutions/p90.erl">P90</a> (**)
+  <dt id="p90"><strong><a href="txt/p90.erl.txt">P90</a> (**)
       Eight queens problem</strong></dt>
   <dd>This is a classical problem in computer science.  The objective is to
     place eight queens on a chessboard so that no two queens are attacking
@@ -1292,7 +1292,7 @@
       that the queen in the first column is in row 4, the queen in the
       second column is in row 2, etc.  Use the generate-and-test paradigm.</p></dd>
   
-  <dt id="p91"><strong><a href="solutions/p91.erl">P91</a> (**)
+  <dt id="p91"><strong><a href="txt/p91.erl.txt">P91</a> (**)
       Knight's tour.</strong></dt>
   <dd>Another famous problem is this one: How can a knight jump on
       an <i>N</i>×<i>N</i> chessboard in such a way that it visits every
@@ -1314,7 +1314,7 @@
     <p>Can you find only "closed tours", where the knight can jump from its
       final position back to its starting position?</p></dd>
   
-  <dt id="p92"><strong><a href="solutions/p92.erl">P92</a> (***)
+  <dt id="p92"><strong><a href="txt/p92.erl.txt">P92</a> (***)
       Von Koch's conjecture.</strong></dt>
   <dd>Several years ago I met a mathematician who was intrigued by a problem
     for which he didn't know a solution.  His name was Von Koch, and I don't
@@ -1352,7 +1352,7 @@
   <dd>In a K-regular graph all nodes have a degree of <i>K</i>; i.e. the
     number of edges incident in each node is <i>K</i>.  How many
     (non-isomorphic!) 3-regular graphs with 6 nodes are there?  See also a
-    <a href="solutions/p94.txt">table of results</a> and
+    <a href="txt/p94.txt">table of results</a> and
     a <a href="https://prof.ti.bfh.ch/hew1/informatik3/prolog/p-99/GraphLayout/index.html">Java
     applet</a> that can represent graphs geometrically.<br><br></dd>
   
@@ -1370,8 +1370,8 @@
     these modified diagrams, write a function isIdentifier that can check
     whether or not a given string is a legal identifier.<br><br></dd>
   
-  <dt id="p97"><strong><a href="solutions/p97.erl">P97</a> (**)
-      Sudoku.  <a href="solutions/p97b.erl">(alternate solution)</a></strong></dt>
+  <dt id="p97"><strong><a href="txt/p97.erl.txt">P97</a> (**)
+      Sudoku.  <a href="txt/p97b.erl.txt">(alternate solution)</a></strong></dt>
   <dd>Sudoku puzzles go like this:
   
   <pre>   Problem statement                 Solution
@@ -1450,10 +1450,10 @@
       character location is represented by a dot (.).  In order to make the
       solution easier, character locations can also contain predefined
       character values.  The puzzle opposite is defined in the
-      file <a href="solutions/p99a.dat">p99a.dat</a>, other examples
-      are <a href="solutions/p99b.dat">p99b.dat</a>
-      and <a href="solutions/p99d.dat">p99d.dat</a>.  There is also an example of a
-      puzzle (<a href="solutions/p99c.dat">p99c.dat</a>) which does not have a
+      file <a href="txt/p99a.dat">p99a.dat</a>, other examples
+      are <a href="txt/p99b.dat">p99b.dat</a>
+      and <a href="txt/p99d.dat">p99d.dat</a>.  There is also an example of a
+      puzzle (<a href="txt/p99c.dat">p99c.dat</a>) which does not have a
       solution.</p>
   
     <p>Words are strings of at least two characters.  A horizontal or
