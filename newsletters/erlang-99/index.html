@@ -240,15 +240,18 @@
           subgroups of 2, 3 and 4 persons?  Write a function that generates
           all the possibilities.
           <p>Example:</p>
-  <pre>> group3(List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
-  res0: List[List[List[String]]] = List(List(List(Aldo, Beat), List(Carla, David, Evi), List(Flip, Gary, Hugo, Ida)), ...</pre>
+  <pre>> p27:group3(["A", "B", "C", "D", "E", "F", "G", "H", "I"]).
+    [[["A","B"],["C","D","E"],["F","G","H","I"]],
+    [["A","B"],["C","D","F"],["E","G","H","I"]]...</pre>
   
           <p>b) Generalize the above predicate in a way that we can specify
             a list of group sizes and the predicate will return a list of
             groups.</p>
           <p>Example:</p>
-  <pre>> group(List(2, 2, 5), List("Aldo", "Beat", "Carla", "David", "Evi", "Flip", "Gary", "Hugo", "Ida"))
-  res0: List[List[List[String]]] = List(List(List(Aldo, Beat), List(Carla, David), List(Evi, Flip, Gary, Hugo, Ida)), ...</pre>
+  <pre>> p27:group([1,2], ["A", "B", "C"]).
+    [[["A"],[["B","C"]]],
+     [["B"],[["A","C"]]],
+     [["C"],[["A","B"]]]]</pre>
   
           <p>Note that we do not want permutations of the group members;
             i.e. ((Aldo, Beat), ...) is the same solution as ((Beat, Aldo),
