@@ -25,7 +25,7 @@
       the problem description.</p>
       This HTML template is a fork of the Scala-99 problems by
       Phil Gold, whose original source can be found at <a href="http://aperiodic.net/phil/scala/s-99/">http://aperiodic.net/phil/scala/s-99/</a>
-      <p>[I don't have example solutions to all of the problems yet.  Only the first 40 have been solved till now.
+      <p>[I don't have example solutions to all of the problems yet.  Only the first ~50 have been solved till now.
        If you feel a particular problem can be solved in a
       better manner than I did, please let me know that, too.  &lt;<a
       href="mailto:purijatin@gmail.com">purijatin @ gmail . com</a>&gt;]</p>
@@ -363,14 +363,20 @@
             Compare the two methods of calculating Euler's totient function.</strong></dt>
         <dd>Use the solutions of problems <a href="#p34">P34</a>
           and <a href="#p37">P37</a> to compare the algorithms.  Try to
-          calculate phi(10090) as an example.</dd><br>
+          calculate phi(10090) as an example.
+    <pre>> p37:phi(10090).
+     4032.0
+           
+ > p34:totient(10090).
+     4032</pre>
+          </dd><br>
   
         <dt id="p39"><strong><a href="txt/p39.erl.txt">P39</a> (*)
             A list of prime numbers.</strong></dt>
         <dd>Given a range of integers by its lower and upper limit,
           construct a list of all prime numbers in that range.
-  <pre>> listPrimesinRange(7 to 31)
-  res0: List[Int] = List(7, 11, 13, 17, 19, 23, 29, 31)</pre></dd>
+  <pre>> p39:listPrimesinRange(7, 31).
+    [7,11,13,17,19,23,29,31]</pre></dd>
   
         <dt id="p40"><strong><a href="txt/p40.erl.txt">P40</a> (**)
             Goldbach's conjecture.</strong></dt>
@@ -381,41 +387,25 @@
           numerically confirmed up to very large numbers (much larger than
           Scala's Int can represent).  Write a function to find the two
           prime numbers that sum up to a given even integer.
-  <pre>> 28.goldbach
-  res0: (Int, Int) = (5,23)</pre></dd>
+  <pre>> p40:goldbach(28).
+    [5,23]</pre></dd>
   
         <dt id="p41"><strong><a href="txt/p41.erl.txt">P41</a> (**)
             A list of Goldbach compositions.</strong></dt>
         <dd>Given a range of integers by its lower and upper limit, print a
           list of all even numbers and their Goldbach composition.
-  <pre>> printGoldbachList(9 to 20)
-  10 = 3 + 7
-  12 = 5 + 7
-  14 = 3 + 11
-  16 = 3 + 13
-  18 = 5 + 13
-  20 = 3 + 17</pre>
+  <pre>> p41:printGoldbachList(9, 20).
+    10  = 3 + 7
+    12  = 1 + 11
+    14  = 1 + 13
+    16  = 3 + 13
+    18  = 1 + 17
+    20  = 1 + 19</pre>
   
-          <p>In most cases, if an even number is written as the sum of two
-            prime numbers, one of them is very small.  Very rarely, the
-            primes are both bigger than, say, 50.  Try to find out how many
-            such cases there are in the range 2..3000.</p>
-          <p>Example (minimum value of 50 for the primes):</p>
-  <pre>> printGoldbachListLimited(1 to 2000, 50)
-  992 = 73 + 919
-  1382 = 61 + 1321
-  1856 = 67 + 1789
-  1928 = 61 + 1867</pre></dd>
-  
-        <p>The file containing the full class for this section
-        is <a href="arithmetic.erl.txt">arithmetic.erl</a>.</p>
+         
+  </dd>
   
         <h2 id="logic">Logic and Codes</h2>
-  
-        <p>As in the previous section, we will start with a skeleton file,
-        <a href="logic1.erl.txt">logic1.erl</a>, and add code to it for each
-        problem.  The difference here is that the file starts out almost
-        empty.</p>
   
         <dt id="p46"><strong><a href="txt/p46.erl.txt">P46</a> (**)
             Truth tables for logical expressions.</strong></dt>
