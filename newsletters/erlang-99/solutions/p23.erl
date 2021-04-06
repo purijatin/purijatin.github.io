@@ -3,7 +3,7 @@
 -module(p23).
 -export([randomSelect/2]).
 
-randomSelect(0, Ls) ->
+randomSelect(0, _) ->
     [];
 
 randomSelect(N, Ls) ->

@@ -6,10 +6,10 @@
 len([]) ->
     0;
 
-len([_ | []]) ->
+len([Head | []]) ->
     1;
 
-len([_ | Tail]) ->
+len([Head | Tail]) ->
     1 + len(Tail).
 
 %c(p04).
