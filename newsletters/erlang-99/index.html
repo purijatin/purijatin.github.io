@@ -415,38 +415,34 @@
           or false according to the result of their respective operations;
           e.g. <code>and(A, B)</code> is true if and only if both <i>A</i>
           and <i>B</i> are true.
-  <pre>> and(true, true)
-  res0: Boolean = true
+  <pre>> p46:l_and(true, false).
+    false
   
-  > xor(true. true)
-  res1: Boolean = false</pre>
-  
-      <p>A logical expression in two variables can then be written as an
-      function of two variables, e.g: <code>(a: Boolean, b: Boolean) =>
-      and(or(a, b), nand(a, b))</code></p>
-      
-      <p>Now, write a function called <code>table2</code> which prints the
-      truth table of a given logical expression in two variables.</p>
-  <pre>> table2((a: Boolean, b: Boolean) => and(a, or(a, b)))
-  A     B     result
-  true  true  true
-  true  false true
-  false true  false
-  false false false</pre></dd>
+  > p46:l_or(true, false). 
+  true</pre>
+     </dd>
   
         <dt id="p47"><strong><a href="txt/p47.erl.txt">P47</a> (*)
             Truth tables for logical expressions (2).</strong></dt>
-        <dd>Continue problem <a href="#p46">P46</a> by
-        redefining <code>and</code>, <code>or</code>, etc as operators.
-        (i.e. make them methods of a new class with an implicit conversion
-        from Boolean.)  <code>not</code> will have to be left as a object
-        method.
-  <pre>> table2((a: Boolean, b: Boolean) => a and (a or not(b)))
-  A     B     result
-  true  true  true
-  true  false true
-  false true  false
-  false false false</pre></dd>
+        <dd>
+          <p>Now, write a function called <code>table2</code> which prints the
+            truth table of a given logical expression in two variables.</p>
+        <pre>> p46:table2(fun(A, B) -> A and B end).
+          A      B      result
+          true   true   true
+          true   false  false
+          false  true   false
+          false  false  false
+          ok
+          
+          > p46:table2(fun p46:l_nand/2).        
+          A      B      result
+          true   true   false
+          true   false  true
+          false  true   true
+          false  false  true
+          ok</pre>
+    </dd>
         
         <dt id="p48"><strong>P48 (**) Truth tables for logical expressions (3).</strong></dt>
         <dd>Omitted for now.<br><br><!--Generalize problem <a href="#p47">P47</a> and write a
@@ -473,8 +469,8 @@
       
           <p>Find out the construction rules and write a function to
             generate Gray codes.</p>
-  <pre>> gray(3)
-  res0 List[String] = List(000, 001, 011, 010, 110, 111, 101, 100)</pre>
+  <pre>> p49:gray(3).
+    ["000","001","010","011","100","101","110","111"]</pre>
   
           <p>See if you can use memoization to make the function more
           efficient.</p></dd>
