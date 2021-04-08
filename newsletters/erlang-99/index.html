@@ -652,23 +652,25 @@
       Count the leaves of a binary tree.</strong></dt>
   <dd>A leaf is a node with no successors.  Write a
     method <code>leafCount</code> to count them.
-  <pre>> Node('x', Node('x'), End).leafCount
-  res0: Int = 1</pre></dd>
+  <pre>> p61:leafCount(#node{value = 23}).
+   2</pre></dd>
   
   <dt id="pP61A"><strong><a href="txt/p61a.erl.txt">61A</a> (*)
       Collect the leaves of a binary tree in a list.</strong></dt>
   <dd>A leaf is a node with no successors.  Write a
     method <code>leafList</code> to collect them in a list.
-  <pre>> Node('a', Node('b'), Node('c', Node('d'), Node('e'))).leafList
-  res0: List[Char] = List(b, d, e)</pre></dd>
+  <pre>> E = #node{value = "a", leftNode = #node{value = "b"}, rightNode = #node{ value = "c" }}.
+    
+    p61a:leafList(E).                                                                        
+   ["b","c"]</pre></dd>
   
   <dt id="p62"><strong><a href="txt/p62.erl.txt">P62</a> (*)
       Collect the internal nodes of a binary tree in a list.</strong></dt>
   <dd>An internal node of a binary tree has either one or two non-empty
     successors.  Write a method <code>internalList</code> to collect them
     in a list.
-  <pre>> Node('a', Node('b'), Node('c', Node('d'), Node('e'))).internalList
-  res0: List[Char] = List(a, c)</pre></dd>
+  <pre>> p62:internalList( #node{value = "a", leftNode = #node{value = "b"}, rightNode = #node{ value = "c" , leftNode = #node{value = "d"}}}).
+    ["a","c"]</pre></dd>
   
   <dt id="p62B"><strong><a href="txt/p62b.erl.txt">P62B</a> (*)
       Collect the nodes at a given level in a list.</strong></dt>
