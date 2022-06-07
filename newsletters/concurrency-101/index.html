@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - Auto Animate</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>Concurrency in Java</h3>
+					<p>101 - Fundamentals</p>
+				</section>
+				<section data-auto-animate data-auto-animate-unmatched="fade" style="text-align: left;">
+						<h4>About Me:</h4>	
+						<ul>
+							<li>10+ years of JVM experience</li>
+							<li>Author of book Scala Microservices</li>
+							<li>Provide Scala consulting/trainings on behalf of Lightbend</li>
+							<li></li>
+						</ul>
+				</section>
+				<style>
+					.container{
+						display: flex;
+					}
+					.col{
+						flex: 1;
+					}
+					</style>
+				<section>
+					<section data-auto-animate>
+						<p>What does the below print?</p>
+						<div class="container">
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="java" data-trim>
+								class Country {
+									private String name;
+									private long population;
+									
+									public Country(String name, long population) {
+										this.name = name;
+										this.population = population;
+									}
+								
+									public String getName() {
+										return name;
+									}
+
+									public long getPopulation() {
+										return population;
+									}
+								}								
+								</code></pre>
+							</div>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									static Country country;
+
+									public static void read() {
+										if (country != null) {
+											System.out.println(country.getName() 
+												+ " - " + country.getPopulation());
+										}
+									}
+
+									country = new Country("India", 125* 1_00_00_000L);
+									new Thread(() -> read()).start();
+								</code></pre>
+							</div>
+						</div>
+					</section>
+					<section data-auto-animate>
+						<div style="text-align: left;">
+							<h4>Possible answers?</h4>	
+							<ul>
+								<li style="opacity: 0.2;">A. null - null</li>
+								<li style="opacity: 0.2;">B. India - 125000000</li>
+								<li style="opacity: 0.2;">C. null - 125000000</li>
+								<li style="opacity: 0.2;">D. India - 0</li>
+							</ul>
+						</div>
+					</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Possible answers?</h4>	
+								<ul>
+									<li>A. null - null</li>
+									<li>B. India - 125000000</li>
+									<li>C. null - 125000000</li>
+									<li>D. India - 0</li>
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate style="text-align: left;">
+							<h4>No Visibility</h4>
+							<ul>
+								<li>In a <span style="opacity: 0.2;">single-threaded environment</span>, if you write a value to a variable and later read that variable, you can expect to get the same value back</li>
+								<li>In a <span style="opacity: 0.2;">multi-threaded environment</span>, there is no guarantee that the reading thread will see a value written by another thread on a timely basis, or even at all</li>
+							</ul>
+						</section>
+						<section data-auto-animate style="text-align: left;">
+							<h4>No Visibility</h4>
+							<ul>
+								<li>This may seem like a broken design, but it is meant to allow JVMs to take full advantage of the performance of modern multiprocessor hardware. </li>
+								<li>For example, in the absence of synchronization, the Java Memory Model permits the compiler to reorder operations and cache values in registers, and permits CPUs to reorder operations and cache values in processor-specific caches</li>
+							</ul>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								final - keyword
+							</h4>
+							<p>Memory Visibility</p>
+						</section>
+						<section data-auto-animate>
+							<h4>Visibility with `final`</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+									class Country {
+										private final String name;
+										private final long population;
+									
+										public Country(String name, long population) {
+											this.name = name;
+											this.population = population;
+										}
+
+										public String getName() {
+											return name;
+										}
+									
+										public long getPopulation() {
+											return population;
+										}
+									}
+									</code></pre>
+								</div>
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+										Country p = new Country("India", 125 * 1_00_00_000L);
+										new Thread(() -> {
+											System.out.println(p.getName());
+											// Will always print `India`
+											System.out.println(p.getPopuluation());
+											// Will always print `1250000000L`
+										}).start();
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Immutable objects are always thread-safe</p>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								volatile - keyword
+							</h4>
+							<p>Memory Visibility</p>
+						</section>
+						<section data-auto-animate>
+							<h4>No Visibility</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+									class Country {
+										private String name;
+										
+										public String getName() {
+											return name;
+										}
+										public void setName(String name) {
+											this.name = name;
+										}
+									}
+									</code></pre>
+								</div>
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+										Country p = new Country();
+										p.setName("India");
+										new Thread(() -> {
+											System.out.println(p.getName());
+											// May print `null` or `India`
+										}).start();
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>Visibility with `volatile`</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+									class Country {
+										private volatile String name;
+										
+										public String getName() {
+											return name;
+										}
+										public void setName(String name) {
+											this.name = name;
+										}
+									}
+									</code></pre>
+								</div>
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+										Country p = new Country();
+										p.setName("India");
+										new Thread(() -> {
+											System.out.println(p.getName());
+											// Will always print `India`
+										}).start();
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>Rule</h4>
+							<p>Volatile variable rule: A write to a volatile field <span style="opacity: 0.2;">happens-before</span> every subsequent read of that same field</p>
+						</section>
+						<section data-auto-animate>
+							<p>Is this class Thread-Safe?</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class MutableInteger {
+										private int num;
+
+										public void setNum(int n) {
+											this.num = n
+										}
+
+										public int getNum() {
+											return this.num;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this class Thread-Safe? </p> <p><span style="color: red;">No</span></p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class MutableInteger {
+										private int num;
+
+										public void setNum(int n) {
+											this.num = n
+										}
+
+										public int getNum() {
+											return this.num;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this class Thread-Safe?</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class UnsafeLazyInitialization {
+										private static Resource resource
+
+										public static Resource getInstance() {
+											if (resource == null) {
+												resource = new Resource();
+											}
+											return resource;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this class Thread-Safe?</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									@NotThreadSafe
+									class UnsafeLazyInitialization {
+										private static Resource resource
+
+										public static Resource getInstance() {
+											if (resource == null) {
+												resource = new Resource();
+											}
+											// Unsafe Publication
+											return resource;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							With the exception of immutable objects, it is not safe to use an object that has been initialized by another thread unless the publication happens-before the consuming thread uses it.
+						</section>
+						<section data-auto-animate>
+							<h4>
+								volatile semantics:
+							</h4>
+							<ul>
+								<li>
+									When a field is declared volatile, the compiler and runtime are put on notice that this variable is shared and that operations on it should not be reordered with other memory operations. 
+								</li>
+								<li>
+									Volatile variables are not cached in registers or in caches where they are hidden from other processors, so a read of a volatile variable always returns the most recent write by any thread.
+								</li>
+							</ul>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								synchronized - keyword
+							</h4>
+							<p>Memory Visibility</p>
+						</section>
+						<section data-auto-animate>
+							<p>Is this Thread-Safe?</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class LazyInitialization {
+										private static Resource resource
+										private final CustomLock lock = new CustomLock();
+										
+										public static Resource getInstance() {
+											lock.lock();
+											try {
+												if (resource == null) {
+													resource = new Resource();
+												}
+												return resource;
+											} finally {
+												lock.unlock();
+											}
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this Thread-Safe?</p>
+							<p><span style="color: red;">No</span></p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class LazyInitialization {
+										private static Resource resource
+										private final CustomLock lock = new CustomLock();
+										
+										public static Resource getInstance() {
+											lock.lock();
+											try {
+												if (resource == null) {
+													resource = new Resource();
+												}
+												return resource;
+											} finally {
+												lock.unlock();
+											}
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this Thread-Safe?</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class LazyInitialization {
+										private static Resource resource
+										
+										public static synchronized Resource getInstance() {
+											if (resource == null) {
+												resource = new Resource();
+											}
+											return resource;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Is this Thread-Safe?</p>
+							<p><span style="color: green;">Yes</span></p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									class LazyInitialization {
+										@GuardedBy("this")
+										private static Resource resource
+										
+										public static synchronized Resource getInstance() {
+											if (resource == null) {
+												resource = new Resource();
+											}
+											return resource;
+										}
+									}
+								</code></pre>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>
+								`synchronized` offers two capabilities:
+							</h4>
+							
+							<ul>
+								
+								<li>Atomicity</li>
+								<li>Memory Visibility</li>
+							</ul>
+						</section>
+						<section data-auto-animate>
+							Locking is not just about mutual exclusion; it is also about memory visibility. To ensure that all threads see the most up-to-date values of shared mutable variables, the reading and writing threads must synchronize on a common lock.
+						</section>
+						<section data-auto-animate>
+							<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									@ThreadSafe
+									class SynchronizedInteger {
+										@GuardedBy("this")
+										private int num;
+
+										public synchronized void setNum(int n) {
+											this.num = n
+										}
+
+										public synchronized int getNum() {
+											return this.num;
+										}
+									}
+								</code></pre>
+						</section>
+						<section data-auto-animate>
+							<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									@ThreadSafe
+									class SynchronizedInteger {
+										private final Object lock = new Object();
+										@GuardedBy("lock")
+										private int num;
+
+										public void setNum(int n) { 
+											synchronized(lock) {
+												this.num = n
+											}
+										}
+
+										public synchronized int getNum() {
+											synchronized(lock) {
+												return this.num;
+											}
+										}
+									}
+								</code></pre>
+						</section>
+						<section data-auto-animate>
+							<p>When thread A executes a synchronized block, and subsequently thread B enters a synchronized block guarded by the same lock, the values of variables that were visible to A prior to releasing the lock are guaranteed to be visible to B upon acquiring the lock</p>
+							<p>Without synchronization, there is no such guarantee.</p>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h2>Memory Visibility</h2>
+						</section>
+						<section data-auto-animate >
+							<h2>Java Memory Model</h2>
+							<p>
+								The <span style="opacity: 0.2;">Java Memory Model</span> defines a partial ordering called <span style="opacity: 0.2;">happens-before</span> on all actions. 
+								To guarantee that the thread executing action `B` can see the results of action `A` (whether or not `A` and `B` occur in different threads), there must be a happens-before relationship between A and B. 
+								In the absence of a happens-before ordering between two operations, the JVM is free to reorder them as it pleases
+							</p>
+							<p>Reference: <a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.4.5">JLS</a></p>
+						</section>
+						<section data-auto-animate>
+							<p>happens-before semantics (source: Chapter-16 Java Concurrency in Practice):</p>
+							<img src="assets/happens-before.png" style="height: 700px;">
+						</section>
+					</section>
+					
+
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>Auto-Animate Example</h3>
+					<p style="opacity: 0.2; margin-top: 100px;">This will fade out</p>
+					<p>This element is unmatched</p>
+					<img src="assets/image1.png" style="height: 150px;">
+					<pre data-id="code"><code data-line-numbers class="hljs" data-trim>
+						function Example() {
+						  New line!
+						  const [count, setCount] = useState(0);
+						}
+					</code></pre>
+				</section>
+
+				<section data-auto-animate>
+					<p data-id="text-props" style="background: #555; line-height: 1em; letter-spacing: 0em;">Line Height & Letter Spacing</p>
+				</section>
+				<section data-auto-animate>
+					<p data-id="text-props" style="background: #555; line-height: 3em; letter-spacing: 0.2em;">Line Height & Letter Spacing</p>
+				</section>
+
+				<section>
+					<section data-auto-animate>
+						<h3>Swapping list items</h3>
+						<ul>
+							<li>One</li>
+							<li>Two</li>
+							<li>Three</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3>Swapping list items</h3>
+						<ul>
+							<li>Two</li>
+							<li>One</li>
+							<li>Three</li>
+						</ul>
+					</section>
+					<section data-auto-animate>
+						<h3>Swapping list items</h3>
+						<ul>
+							<li>Two</li>
+							<li>Three</li>
+							<li>One</li>
+						</ul>
+					</section>
+				</section>
+
+				<section data-auto-animate style="height: 600px">
+					<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 1</h3>
+					<h2 data-id="title" style="margin-top: 260px;">Animate Anything</h2>
+					<div data-id="1" style="background: white; position: absolute; top: 150px; left: 16%; width: 60px; height: 60px;"></div>
+					<div data-id="2" style="background: white; position: absolute; top: 150px; left: 36%; width: 60px; height: 60px;"></div>
+					<div data-id="3" style="background: white; position: absolute; top: 150px; left: 56%; width: 60px; height: 60px;"></div>
+					<div data-id="4" style="background: white; position: absolute; top: 150px; left: 76%; width: 60px; height: 60px;"></div>
+				</section>
+				<section data-auto-animate style="height: 600px">
+					<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 2</h3>
+					<h2 data-id="title" style="margin-top: 500px">With Auto Animate</h2>
+					<div data-id="1" style="background: cyan; position: absolute; bottom: 190px; left: 16%; width: 60px; height: 60px;"></div>
+					<div data-id="2" style="background: magenta; position: absolute; bottom: 190px; left: 36%; width: 60px; height: 160px;"></div>
+					<div data-id="3" style="background: yellow; position: absolute; bottom: 190px; left: 56%; width: 60px; height: 260px;"></div>
+					<div data-id="4" style="background: red; position: absolute; bottom: 190px; left: 76%; width: 60px; height: 360px;"></div>
+				</section>
+				<section data-auto-animate style="height: 600px">
+					<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 3</h3>
+					<h2 data-id="title" style="margin-top: 500px; opacity: 0;">With Auto Animate</h2>
+					<div data-id="1" style="background: cyan; position: absolute; top: 50%; left: 50%; width: 400px; height: 400px; margin: -200px 0 0 -200px; border-radius: 400px;"></div>
+					<div data-id="2" style="background: magenta; position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; margin: -150px 0 0 -150px; border-radius: 400px;"></div>
+					<div data-id="3" style="background: yellow; position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; margin: -100px 0 0 -100px; border-radius: 400px;"></div>
+					<div data-id="4" style="background: red; position: absolute; top: 50%; left: 50%; width: 100px; height: 100px; margin: -50px 0 0 -50px; border-radius: 400px;"></div>
+				</section>
+				<section data-auto-animate style="height: 600px">
+					<h3 style="opacity: 0.3; font-size: 18px;">SLIDE 3</h3>
+					<h2 data-id="title" style="margin-top: 500px; opacity: 0;">With Auto Animate</h2>
+					<div data-id="1" style="background: red; position: absolute; top: 250px; left: 16%; width: 60px; height: 60px;"></div>
+					<div data-id="2" style="background: yellow; position: absolute; top: 250px; left: 36%; width: 60px; height: 60px;"></div>
+					<div data-id="3" style="background: magenta; position: absolute; top: 250px; left: 56%; width: 60px; height: 60px;"></div>
+					<div data-id="4" style="background: cyan; position: absolute; top: 250px; left: 76%; width: 60px; height: 60px;"></div>
+				</section>
+
+				<section data-auto-animate data-auto-animate-id="a">
+					<h2>data-auto-animate-id="a"</h2>
+					<h3>A1</h3>
+				</section>
+				<section data-auto-animate data-auto-animate-id="a">
+					<h2>data-auto-animate-id="a"</h2>
+					<h3>A1</h3>
+					<h3>A2</h3>
+				</section>
+				<section data-auto-animate data-auto-animate-id="b">
+					<h2>data-auto-animate-id="b"</h2>
+					<h3>B1</h3>
+				</section>
+				<section data-auto-animate data-auto-animate-id="b">
+					<h2>data-auto-animate-id="b"</h2>
+					<h3>B1</h3>
+					<h3>B2</h3>
+				</section>
+
+				<section>
+					<section id="stacked-slide-1" data-auto-animate>
+						<a href="#/stacked-slide-1">Slide 1</a><br>
+						<a href="#/stacked-slide-2">Slide 2</a><br>
+						<a href="#/stacked-slide-3">Slide 3</a><br>
+						<a href="#/stacked-slide-4">Slide 4</a><br>
+						<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 0px;">A</div>
+					</section>
+					<section id="stacked-slide-2" data-auto-animate>
+						<a href="#/stacked-slide-1">Slide 1</a><br>
+						<a href="#/stacked-slide-2">Slide 2</a><br>
+						<a href="#/stacked-slide-3">Slide 3</a><br>
+						<a href="#/stacked-slide-4">Slide 4</a><br>
+						<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 25%;">A</div>
+					</section>
+					<section id="stacked-slide-3" data-auto-animate>
+						<a href="#/stacked-slide-1">Slide 1</a><br>
+						<a href="#/stacked-slide-2">Slide 2</a><br>
+						<a href="#/stacked-slide-3">Slide 3</a><br>
+						<a href="#/stacked-slide-4">Slide 4</a><br>
+						<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 50%;">A</div>
+					</section>
+					<section id="stacked-slide-4" data-auto-animate>
+						<a href="#/stacked-slide-1">Slide 1</a><br>
+						<a href="#/stacked-slide-2">Slide 2</a><br>
+						<a href="#/stacked-slide-3">Slide 3</a><br>
+						<a href="#/stacked-slide-4">Slide 4</a><br>
+						<div data-id="anim" style="background: indigo; padding: 8px; width: 50px; height: 50px; position: absolute; left: 75%;">A</div>
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				center: true,
+				hash: true,
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+
+	</body>
+</html>
