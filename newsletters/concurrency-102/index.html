@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - Auto Animate</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>Concurrency in Java</h3>
+					<p>102 - Interrupt</p>
+				</section>
+				<!-- <section data-auto-animate data-auto-animate-unmatched="fade" style="text-align: left;">
+						<h4>Little bit about Me:</h4>	
+						<ul>
+							<li>10+ years of JVM experience</li>
+							<li>Author of book Scala Microservices</li>
+							<li>Provide Scala consulting/trainings on behalf of Lightbend</li>
+						</ul>
+				</section> -->
+				<style>
+					.container{
+						display: flex;
+					}
+					.col{
+						flex: 1;
+					}
+					</style>
+				<section data-auto-animate data-auto-animate-unmatched="fade">
+					<h3>Interrupt</h3>
+				</section>					
+				<section>
+					<section data-auto-animate>
+						<p>Example-1</p>
+						<div class="container">
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="java" data-trim>
+									System.out.println(Thread.currentThread().isInterrupted());
+									Thread.currentThread().interrupt();
+									System.out.println(Thread.currentThread().isInterrupted());
+									</code></pre>
+							</div>
+						</div>
+					</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Interrupt status:</h4>	
+								<ul>
+									<li>The interrupt mechanism is implemented using an internal flag known as the interrupt status</li>
+									<li>Invoking Thread.interrupt sets this flag</li>
+									<li>isInterrupted method, can be used to query the interrupt status of a thread</li>
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>Interrupt</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+									    private static void example2() {
+											Thread thread = new Thread(() -> {
+												while (!Thread.currentThread().isInterrupted()) {
+												}
+												System.out.println("Exited the loop");
+											});
+											thread.start();
+											thread.interrupt();
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>There is nothing in the API or language specification that ties interruption to any specific cancellation semantics, but in practice, using interruption for anything but cancellation is fragile and difficult to sustain in larger applications.</p>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>What is interrupt used for?</h4>	
+								<ul>
+									<li>By convention: an interrupt is an indication to a thread that it should stop what it is doing and do something else</li>
+									<li>It's up to the programmer to decide exactly how a thread responds to an interrupt</li>	
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Different libraries have a custom behavior defined, each time a thread is interrupted</p>
+						</section>
+						<section data-auto-animate>
+							<h4>Interrupt</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										private static void example3() {
+											Thread thread = new Thread(() -> {
+												try {
+													Thread.sleep(1000000000L);
+												} catch (InterruptedException e) {
+													System.out.println("Exited the sleep");
+												}
+											});
+											thread.start();
+											thread.interrupt();
+											System.out.println("Main thread is exiting");
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Interrupt Behavior</h4>	
+								<ul>
+									<li>Blocking library methods like Thread.sleep and Object.wait try to detect when a thread has been interrupted and return early</li>
+									<li>They respond to interruption by clearing the interrupted status and throwing InterruptedException, indicating that the blocking operation completed early due to interruption</li>	
+									<li>The JVM makes no guarantees on how quickly a blocking method will detect interruption, but in practice this happens reasonably quickly.</li>
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>Calling `interrupt` does not necessarily stop the target thread from doing what it is doing; it merely delivers the message that interruption has been requested.</p>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Interrupt Behavior</h4>	
+								<ul>
+									<li>A good way to think about interruption is that it does not actually interrupt a running thread; it just requests that the thread interrupt itself at the next convenient opportunity</li>
+									<li>Some methods, such as `wait`, `sleep`, and `join`, take such requests seriously, throwing an exception when they receive an interrupt request or encounter an already set interrupt status upon entry</li>	
+									<li>If a thread is interrupted when it is not blocked, its interrupted status is set, and it is up to the activity being cancelled to poll the interrupted status to detect interruption</li>
+								</ul>
+							</div>
+						</section>
+						
+						<section data-auto-animate>
+							<h4>What happens with below program?</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										private static void example4() throws InterruptedException {
+											Thread thread = new Thread(() -> {
+												while (true) {
+									
+												}
+											});
+											thread.start();
+											thread.interrupt();
+											thread.join();
+											System.out.println("Completed");
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>
+								Because each thread has its own interruption policy, you should not interrupt a thread unless you know what interruption means to that thread.
+							</p>
+							<p>Note: If you ask me, never interrupt any thread. Too low level an abstraction</p>
+						</section>
+						<section data-auto-animate>
+							<p>Interruption is usually the most sensible way to implement cancellation.</p>
+							<p>More about it later</p>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: ">
+								<h4>Interrupt Behavior across different libraries</h4>	
+								<p>Section 7.1.6: https://learning.oreilly.com/library/view/java-concurrency-in/0321349601/ch07.xhtml#ch07lev1sec2 </p>
+							</div>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								ThreadPools
+							</h4>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>thread-per-task approach has some practical drawbacks, especially when a large number of threads may be created</h4>	
+								<ul>
+									<li>Thread lifecycle overhead. Thread creation and teardown are not free</li>
+									<li>Resource consumption. Active threads consume system resources, especially memory. When there are more runnable threads than available processors, threads sit idle. Having many idle threads can tie up a lot of memory, putting pressure on the garbage collector</li>	
+									<li>Stability. There is a limit on how many threads can be created. </li>
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>Executor Interface</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										public interface Executor {
+
+											/**
+											 * Executes the given command at some time in the future.  The command
+											 * may execute in a new thread, in a pooled thread, or in the calling
+											 * thread, at the discretion of the {@code Executor} implementation.
+											 *
+											 * @param command the runnable task
+											 * @throws RejectedExecutionException if this task cannot be
+											 * accepted for execution
+											 * @throws NullPointerException if command is null
+											 */
+											void execute(Runnable command);
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								cancel
+							</h4>
+						</section>
+						<section data-auto-animate>
+							<h4>Future.cancel</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										private static void threadPoolCancel1() throws Exception {
+											ExecutorService exec = Executors.newCachedThreadPool();
+											Future<?> ans = exec.submit(() -> {
+												try {
+													Thread.sleep(10000000L);
+													System.out.println("Normal exit");
+												} catch (InterruptedException e) {
+													System.out.println("Premptive exit");
+												}
+											});
+											Thread.sleep(1000L);
+											ans.cancel(true);
+											exec.shutdown();
+											exec.awaitTermination(100, TimeUnit.DAYS);
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<h4>ThreadPool.shutdownNow</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										private static void threadPoolCancel2() throws Exception {
+											ExecutorService exec = Executors.newCachedThreadPool();
+											Future<?> ans = exec.submit(() -> {
+												try {
+													Thread.sleep(10000000L);
+													System.out.println("Normal exit");
+												} catch (InterruptedException e) {
+													System.out.println("Premptive exit");
+												}
+											});
+											Thread.sleep(1000L);
+											exec.shutdownNow();
+											exec.awaitTermination(100, TimeUnit.DAYS);
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<p>When an ExecutorService is shut down abruptly with shutdownNow, it attempts to cancel the tasks currently in progress and returns a list of tasks that were submitted but never started so that they can be logged or saved for later processing.</p>
+						</section>
+						
+						<section data-auto-animate>
+							<h4>What will the below print?</h4>
+							<div class="container">
+								<div class="col">
+									<pre data-id="code"><code data-line-numbers class="java" data-trim>
+										private static void threadPoolCancel3() throws Exception {
+											ExecutorService exec = Executors.newCachedThreadPool();
+											AtomicLong counter = new AtomicLong(0);
+											for (int i = 0; i < 100; i++) {
+												exec.submit(() -> {
+													try {
+														Thread.sleep(10000000L);
+													} catch (InterruptedException e) {
+														counter.incrementAndGet();
+													}
+												});
+											}
+											Thread.sleep(1000L);
+											exec.shutdownNow();
+											exec.awaitTermination(1000, TimeUnit.MINUTES);
+											System.out.println(counter.get());
+										}
+									</code></pre>
+								</div>
+							</div>
+						</section>
+					</section>
+					<section>
+						<section data-auto-animate>
+							<h4>
+								Daemon Threads
+							</h4>
+						</section>
+						<section data-auto-animate>
+							<h4>
+								Sometimes you want to create a thread that performs some helper function but you don't want the existence of this thread to prevent the JVM from shutting down. This is what daemon threads are for.
+							</h4>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Daemon Threads</h4>	
+								<ul>
+									<li>Threads are divided into two types: normal threads and daemon threads</li>	
+									<li>When the JVM starts up, all the threads it creates (such as garbage collector and other housekeeping threads) are daemon threads, except the main thread</li>
+									<li>When a new thread is created, it inherits the daemon status of the thread that created it, so by default any threads created by the main thread are also normal threads.</li>
+								</ul>
+							</div>
+						</section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Daemon Threads</h4>	
+								<ul>
+									<li>Normal threads and daemon threads differ only in what happens when they exit.</li>	
+									<li>When a thread exits, the JVM performs an inventory of running threads, and if the only threads that are left are daemon threads, it initiates an orderly shutdown</li>
+									<li>Daemon threads should be used sparingly—few processing activities can be safely abandoned at any time with no cleanup. In particular, it is dangerous to use daemon threads for tasks that might perform any sort of I/O</li>
+								</ul>
+							</div>
+						</section>
+						
+						<section data-auto-animate>
+							<p>Daemon Threads</p>
+							<div class="col">
+								<pre data-id="code"><code data-line-numbers class="Java" data-trim>
+									private static void daemonThread1() throws Exception {
+										Runnable run = () -> {
+											try {
+												Thread.sleep(1000000L);
+											} catch (InterruptedException e) {
+												throw new RuntimeException(e);
+											}
+										};
+										Thread thread = new Thread(run);
+										thread.setDaemon(true);
+										thread.start();
+									}
+								</code></pre>
+							</div>
+						</section>
+						
+					</section>
+					<section>
+						<section data-auto-animate>
+							<div style="text-align: left;">
+								<h4>Daemon Threads</h4>	
+								<ul>
+									<li>ShutdownHooks</li>	
+									<li>Uncaught Exception Handlers</li>
+								</ul>
+							</div>
+						</section>
+					</section>
+				</section>
+			
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				center: true,
+				hash: true,
+				plugins: [ RevealHighlight ]
+			});
+		</script>
+
+	</body>
+</html>

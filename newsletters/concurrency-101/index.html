@@ -22,15 +22,14 @@
 					<h3>Concurrency in Java</h3>
 					<p>101 - Fundamentals</p>
 				</section>
-				<section data-auto-animate data-auto-animate-unmatched="fade" style="text-align: left;">
-						<h4>About Me:</h4>	
+				<!-- <section data-auto-animate data-auto-animate-unmatched="fade" style="text-align: left;">
+						<h4>Little bit about Me:</h4>	
 						<ul>
 							<li>10+ years of JVM experience</li>
 							<li>Author of book Scala Microservices</li>
 							<li>Provide Scala consulting/trainings on behalf of Lightbend</li>
-							<li></li>
 						</ul>
-				</section>
+				</section> -->
 				<style>
 					.container{
 						display: flex;
@@ -85,7 +84,7 @@
 						<div style="text-align: left;">
 							<h4>Possible answers?</h4>	
 							<ul>
-								<li style="opacity: 0.2;">A. null - null</li>
+								<li style="opacity: 0.2;">A. null - 0</li>
 								<li style="opacity: 0.2;">B. India - 125000000</li>
 								<li style="opacity: 0.2;">C. null - 125000000</li>
 								<li style="opacity: 0.2;">D. India - 0</li>
@@ -96,7 +95,7 @@
 							<div style="text-align: left;">
 								<h4>Possible answers?</h4>	
 								<ul>
-									<li>A. null - null</li>
+									<li>A. null - 0</li>
 									<li>B. India - 125000000</li>
 									<li>C. null - 125000000</li>
 									<li>D. India - 0</li>
@@ -462,7 +461,7 @@
 											}
 										}
 
-										public synchronized int getNum() {
+										public int getNum() {
 											synchronized(lock) {
 												return this.num;
 											}
@@ -555,7 +554,7 @@
 									}
 								</code></pre>
 							</div>
-							<p>LinkedBlockingQueue is thread-safe
+							<p>LinkedBlockingQueue is thread-safe and can be concurrently accessed
 							</p>
 						</section>
 					</section>
