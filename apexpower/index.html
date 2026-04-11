@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexPower Exchange Limited — India's Next-Gen Power Exchange</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           CSS RESET & VARIABLES
+           ============================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #050a14;
+            --bg-secondary: #0a1628;
+            --bg-card: #0d1b30;
+            --bg-card-hover: #112240;
+            --accent-cyan: #00e5ff;
+            --accent-green: #00e676;
+            --accent-amber: #ffc400;
+            --accent-violet: #7c4dff;
+            --accent-rose: #ff4081;
+            --text-primary: #e8edf5;
+            --text-secondary: #8892a8;
+            --text-muted: #4a5568;
+            --border-subtle: rgba(136, 146, 168, 0.12);
+            --glow-cyan: 0 0 30px rgba(0, 229, 255, 0.3);
+            --glow-green: 0 0 30px rgba(0, 230, 118, 0.3);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           SCROLLBAR
+           ============================================ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 3px; }
+
+        /* ============================================
+           UTILITY
+           ============================================ */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 120px 0; position: relative; }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: var(--accent-cyan);
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-text-warm {
+            background: linear-gradient(135deg, var(--accent-amber), var(--accent-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================
+           ANIMATED BACKGROUND GRID
+           ============================================ */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            backdrop-filter: blur(20px);
+            background: rgba(5, 10, 20, 0.8);
+            border-bottom: 1px solid transparent;
+        }
+        .nav.scrolled {
+            border-bottom-color: var(--border-subtle);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            position: relative;
+        }
+        .logo-icon svg { width: 100%; height: 100%; }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+        .logo-text span { color: var(--accent-cyan); }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--accent-cyan); }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .btn-primary {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+            color: var(--bg-primary);
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow-cyan);
+        }
+        .btn-outline {
+            padding: 10px 24px;
+            background: transparent;
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.875rem;
+            border: 1.5px solid var(--accent-cyan);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .btn-outline:hover {
+            background: rgba(0, 229, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+           LIVE TICKER
+           ============================================ */
+        .ticker-bar {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            overflow: hidden;
+            height: 40px;
+        }
+        .ticker-track {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            animation: tickerScroll 30s linear infinite;
+            white-space: nowrap;
+        }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .ticker-item .label { color: var(--text-muted); font-size: 0.7rem; }
+        .ticker-item .value { color: var(--text-primary); font-weight: 600; }
+        .ticker-item .up { color: var(--accent-green); }
+        .ticker-item .down { color: var(--accent-rose); }
+        .ticker-divider {
+            width: 4px;
+            height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 140px;
+            overflow: hidden;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent-cyan);
+            margin-bottom: 28px;
+        }
+        .hero-badge .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 520px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-canvas {
+            position: absolute;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-50%);
+            width: 55%;
+            height: 80%;
+            z-index: 1;
+        }
+        #heroVisualization { width: 100%; height: 100%; }
+
+        /* Floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: var(--accent-cyan);
+            top: 10%; right: 10%;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 300px; height: 300px;
+            background: var(--accent-violet);
+            bottom: 20%; right: 30%;
+            animation-delay: -3s;
+        }
+        .orb-3 {
+            width: 250px; height: 250px;
+            background: var(--accent-green);
+            top: 40%; right: 5%;
+            animation-delay: -5s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(20px, -30px) scale(1.05); }
+            66% { transform: translate(-15px, 15px) scale(0.95); }
+        }
+
+        /* ============================================
+           STATS BAR
+           ============================================ */
+        .stats-bar {
+            padding: 60px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(10, 22, 40, 0.5);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+        .stat-item { text-align: center; }
+        .stat-value {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ============================================
+           LIVE MARKET SECTION
+           ============================================ */
+        .market-section { background: var(--bg-primary); }
+        .market-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .market-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-secondary);
+            padding: 4px;
+            border-radius: 12px;
+        }
+        .market-tab {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+        .market-tab.active {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+
+        /* Price Chart Card */
+        .chart-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green), var(--accent-amber));
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .chart-meta {
+            display: flex;
+            gap: 24px;
+        }
+        .chart-meta-item {
+            text-align: right;
+        }
+        .chart-meta-item .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .chart-meta-item .lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        #priceChart { width: 100%; height: 300px; }
+
+        /* Market Cards Grid */
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .market-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 24px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .market-card:hover {
+            border-color: rgba(0, 229, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        .market-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .market-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        .market-card-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 50px;
+            background: rgba(0, 230, 118, 0.1);
+            color: var(--accent-green);
+        }
+        .market-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .market-card .subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .market-card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .mcs-item .mcs-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .mcs-item .mcs-lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .market-card-sparkline {
+            margin-top: 16px;
+            height: 40px;
+        }
+
+        /* ============================================
+           PRODUCTS SECTION
+           ============================================ */
+        .products-section {
+            background: var(--bg-secondary);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 36px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 229, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        .product-card:hover::after { opacity: 1; }
+        .product-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+        .product-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .product-card .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .product-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .product-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .product-features li {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .product-features li::before {
+            content: '→';
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        /* ============================================
+           INDIA MAP / GRID SECTION
+           ============================================ */
+        .grid-section { background: var(--bg-primary); }
+        .grid-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-top: 48px;
+        }
+        .grid-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .grid-info p {
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+        .grid-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .grid-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+        }
+        .grid-stat .gs-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+        .grid-stat .gs-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        #gridCanvas { width: 100%; height: 500px; border-radius: var(--radius); }
+
+        /* ============================================
+           WHY VIDYUTX
+           ============================================ */
+        .why-section { background: var(--bg-secondary); }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            padding: 32px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .why-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.2);
+        }
+        .why-icon {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .why-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .why-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           CTA SECTION
+           ============================================ */
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+        }
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .cta-content h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        .cta-content p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-subtle);
+            padding: 60px 0 30px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 16px;
+            line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        .footer-col ul li a:hover { color: var(--accent-cyan); }
+        .footer-bottom {
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .footer-bottom .cerc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .market-grid { grid-template-columns: repeat(2, 1fr); }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .grid-visual { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+            .market-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .hero-canvas { display: none; }
+            .hero-content { max-width: 100%; }
+            .nav-links { display: none; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 40 40" fill="none">
+                        <path d="M20 2L4 12v16l16 10 16-10V12L20 2z" stroke="url(#g1)" stroke-width="2" fill="none"/>
+                        <path d="M20 8l-10 6v10l10 6 10-6V14L20 8z" fill="url(#g1)" opacity="0.15"/>
+                        <path d="M15 18l5 8 5-8" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="g1" x1="0" y1="0" x2="40" y2="40">
+                                <stop stop-color="#00e5ff"/>
+                                <stop offset="1" stop-color="#00e676"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="logo-text">Apex<span>Power</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#markets">Markets</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#grid">Grid</a></li>
+                <li><a href="#why">Why ApexPower</a></li>
+            </ul>
+            <div style="display:flex;gap:12px;align-items:center;">
+                <a href="#" class="btn-outline">Sign In</a>
+                <a href="#" class="btn-primary">
+                    Start Trading
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ LIVE TICKER ============ -->
+    <div class="ticker-bar">
+        <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="container" style="position:relative;z-index:2;">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse"></span>
+                    CERC Licensed · Market Coupled · Live Now
+                </div>
+                <h1>
+                    Trade Power.<br>
+                    <span class="gradient-text">Shape India's</span><br>
+                    Energy Future.
+                </h1>
+                <p>
+                    India's most advanced power exchange platform. Trade Day-Ahead, Real-Time, Green Energy & RECs with AI-powered analytics and sub-second execution across the national grid.
+                </p>
+                <div class="hero-actions">
+                    <a href="#" class="btn-primary" style="padding:14px 32px;font-size:1rem;">
+                        Open Trading Account
+                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="#markets" class="btn-outline" style="padding:14px 32px;font-size:1rem;">
+                        View Live Markets
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-canvas">
+            <canvas id="heroVisualization"></canvas>
+        </div>
+    </section>
+
+    <!-- ============ STATS BAR ============ -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value gradient-text" data-count="141">0</div>
+                    <div class="stat-label">Billion Units Traded (FY26)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value gradient-text" data-count="7200">0</div>
+                    <div class="stat-label">Registered Participants</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value gradient-text" data-count="48">0</div>
+                    <div class="stat-label">Auction Sessions / Day</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value gradient-text" data-count="28">0</div>
+                    <div class="stat-label">Indian States Covered</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ LIVE MARKETS ============ -->
+    <section class="section market-section" id="markets">
+        <div class="container">
+            <div class="market-header fade-in">
+                <div>
+                    <div class="section-label">Live Markets</div>
+                    <h2 class="section-title">Real-Time Market <span class="gradient-text">Intelligence</span></h2>
+                </div>
+                <div class="market-tabs">
+                    <button class="market-tab active">DAM</button>
+                    <button class="market-tab">RTM</button>
+                    <button class="market-tab">G-DAM</button>
+                    <button class="market-tab">TAM</button>
+                </div>
+            </div>
+
+            <!-- Price Chart -->
+            <div class="chart-card fade-in">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Day-Ahead Market — Market Clearing Price (₹/MWh)</div>
+                        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">24-hour price curve · 15-min intervals</div>
+                    </div>
+                    <div class="chart-meta">
+                        <div class="chart-meta-item">
+                            <div class="val" style="color:var(--accent-cyan);">₹4,280</div>
+                            <div class="lbl">Current MCP</div>
+                        </div>
+                        <div class="chart-meta-item">
+                            <div class="val" style="color:var(--accent-green);">12,840 MW</div>
+                            <div class="lbl">Cleared Volume</div>
+                        </div>
+                        <div class="chart-meta-item">
+                            <div class="val" style="color:var(--accent-amber);">94.2%</div>
+                            <div class="lbl">Matching Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <canvas id="priceChart"></canvas>
+            </div>
+
+            <!-- Market Cards -->
+            <div class="market-grid fade-in">
+                <div class="market-card">
+                    <div class="market-card-header">
+                        <div class="market-card-icon" style="background:rgba(0,229,255,0.1);">⚡</div>
+                        <span class="market-card-badge">LIVE</span>
+                    </div>
+                    <h3>Day-Ahead Market</h3>
+                    <div class="subtitle">Next-day delivery · Double-sided auction</div>
+                    <div class="market-card-stats">
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-cyan);">₹4,280</div>
+                            <div class="mcs-lbl">Avg MCP</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-green);">+3.2%</div>
+                            <div class="mcs-lbl">vs Yesterday</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">284 GWh</div>
+                            <div class="mcs-lbl">Volume</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">1,842</div>
+                            <div class="mcs-lbl">Bids</div>
+                        </div>
+                    </div>
+                    <canvas class="market-card-sparkline" data-spark="dam"></canvas>
+                </div>
+
+                <div class="market-card">
+                    <div class="market-card-header">
+                        <div class="market-card-icon" style="background:rgba(0,230,118,0.1);">🔄</div>
+                        <span class="market-card-badge">LIVE</span>
+                    </div>
+                    <h3>Real-Time Market</h3>
+                    <div class="subtitle">30-min auctions · Grid balancing</div>
+                    <div class="market-card-stats">
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-green);">₹3,950</div>
+                            <div class="mcs-lbl">Avg MCP</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-rose);">-1.4%</div>
+                            <div class="mcs-lbl">vs Yesterday</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">68 GWh</div>
+                            <div class="mcs-lbl">Volume</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">924</div>
+                            <div class="mcs-lbl">Bids</div>
+                        </div>
+                    </div>
+                    <canvas class="market-card-sparkline" data-spark="rtm"></canvas>
+                </div>
+
+                <div class="market-card">
+                    <div class="market-card-header">
+                        <div class="market-card-icon" style="background:rgba(0,230,118,0.1);">🌿</div>
+                        <span class="market-card-badge" style="background:rgba(0,230,118,0.1);color:var(--accent-green);">GREEN</span>
+                    </div>
+                    <h3>Green Day-Ahead</h3>
+                    <div class="subtitle">Renewable energy · Solar & Non-solar</div>
+                    <div class="market-card-stats">
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-green);">₹3,620</div>
+                            <div class="mcs-lbl">Avg MCP</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val" style="color:var(--accent-green);">+5.8%</div>
+                            <div class="mcs-lbl">vs Yesterday</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">42 GWh</div>
+                            <div class="mcs-lbl">Volume</div>
+                        </div>
+                        <div class="mcs-item">
+                            <div class="mcs-val">612</div>
+                            <div class="mcs-lbl">Bids</div>
+                        </div>
+                    </div>
+                    <canvas class="market-card-sparkline" data-spark="gdam"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PRODUCTS ============ -->
+    <section class="section products-section" id="products">
+        <div class="container">
+            <div class="fade-in">
+                <div class="section-label">Trading Products</div>
+                <h2 class="section-title">Comprehensive Market <span class="gradient-text">Ecosystem</span></h2>
+                <p style="color:var(--text-secondary);max-width:600px;font-size:1rem;">
+                    From day-ahead planning to real-time balancing, our platform covers the full spectrum of India's power markets under CERC regulations.
+                </p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(0,229,255,0.1);">⚡</div>
+                    <h3>Day-Ahead Market (DAM)</h3>
+                    <span class="tag">// AUCTION · 10:00–12:00 IST</span>
+                    <p>Bid for next-day electricity delivery through our double-sided closed auction with uniform price discovery across all regions.</p>
+                    <ul class="product-features">
+                        <li>96 time-block bidding (15-min slots)</li>
+                        <li>Market Coupling for uniform MCP</li>
+                        <li>Portfolio & block-level bidding</li>
+                        <li>AI-powered price forecasting</li>
+                    </ul>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(124,77,255,0.1);">🔄</div>
+                    <h3>Real-Time Market (RTM)</h3>
+                    <span class="tag">// 48 SESSIONS · EVERY 30 MIN</span>
+                    <p>Balance supply-demand mismatches in real-time with half-hourly auctions. Delivery within 1 hour of gate closure.</p>
+                    <ul class="product-features">
+                        <li>48 intraday auction windows</li>
+                        <li>Grid-frequency responsive pricing</li>
+                        <li>Automated deviation settlement</li>
+                        <li>DISCOM & open-access ready</li>
+                    </ul>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(0,230,118,0.1);">🌱</div>
+                    <h3>Green Markets</h3>
+                    <span class="tag">// G-DAM · G-TAM · SOLAR · NON-SOLAR</span>
+                    <p>Trade renewable energy with source-specific contracts. Fulfill RPO mandates through dedicated green energy corridors.</p>
+                    <ul class="product-features">
+                        <li>Solar, Non-solar & Hydro segments</li>
+                        <li>Green Term-Ahead contracts</li>
+                        <li>RPO compliance tracking</li>
+                        <li>Carbon footprint analytics</li>
+                    </ul>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(255,196,0,0.1);">📜</div>
+                    <h3>Certificates (REC & ESCert)</h3>
+                    <span class="tag">// MONTHLY AUCTION · CERC REGULATED</span>
+                    <p>Trade Renewable Energy Certificates and Energy Saving Certificates to meet regulatory obligations under RPO and PAT schemes.</p>
+                    <ul class="product-features">
+                        <li>Monthly REC trading sessions</li>
+                        <li>Multiplier-based ESCert trading</li>
+                        <li>Automated compliance reporting</li>
+                        <li>Obligation tracking dashboard</li>
+                    </ul>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(255,64,129,0.1);">📊</div>
+                    <h3>Term-Ahead Market (TAM)</h3>
+                    <span class="tag">// INTRADAY · DAILY · WEEKLY</span>
+                    <p>Plan your procurement strategy with contracts spanning intraday to weekly delivery periods through continuous trading.</p>
+                    <ul class="product-features">
+                        <li>Contingency & day-ahead contracts</li>
+                        <li>Weekly baseload trading</li>
+                        <li>Bilateral matching engine</li>
+                        <li>Advanced scheduling tools</li>
+                    </ul>
+                </div>
+
+                <div class="product-card fade-in">
+                    <div class="product-icon" style="background:rgba(0,229,255,0.1);">🌏</div>
+                    <h3>Cross-Border Trading</h3>
+                    <span class="tag">// NEPAL · BHUTAN · BANGLADESH</span>
+                    <p>Participate in South Asian power trade with seamless cross-border electricity exchange under government frameworks.</p>
+                    <ul class="product-features">
+                        <li>CBET enabled for SAARC nations</li>
+                        <li>Real-time tie-line monitoring</li>
+                        <li>Multi-currency settlement</li>
+                        <li>Cross-border scheduling API</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ GRID SECTION ============ -->
+    <section class="section grid-section" id="grid">
+        <div class="container">
+            <div class="section-label fade-in">National Grid</div>
+            <h2 class="section-title fade-in">One Nation. One Grid.<br><span class="gradient-text">One Price.</span></h2>
+            <div class="grid-visual">
+                <div class="grid-info fade-in">
+                    <h3>Powering Every Corner of India</h3>
+                    <p>
+                        With market coupling now live, ApexPower connects all five regional grids into a unified national marketplace. 
+                        Every bid from every exchange converges through a single clearing algorithm — ensuring transparent, 
+                        fair pricing for all 28 states and 8 union territories.
+                    </p>
+                    <div class="grid-stats">
+                        <div class="grid-stat">
+                            <div class="gs-val">5</div>
+                            <div class="gs-lbl">Regional Grids Connected</div>
+                        </div>
+                        <div class="grid-stat">
+                            <div class="gs-val">426 GW</div>
+                            <div class="gs-lbl">Installed Capacity</div>
+                        </div>
+                        <div class="grid-stat">
+                            <div class="gs-val">99.98%</div>
+                            <div class="gs-lbl">Platform Uptime</div>
+                        </div>
+                        <div class="grid-stat">
+                            <div class="gs-val">&lt;50ms</div>
+                            <div class="gs-lbl">Trade Execution</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <canvas id="gridCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ WHY VIDYUTX ============ -->
+    <section class="section why-section" id="why">
+        <div class="container">
+            <div style="text-align:center;" class="fade-in">
+                <div class="section-label" style="justify-content:center;">
+                    <span></span>Why ApexPower
+                </div>
+                <h2 class="section-title">Built for the <span class="gradient-text-warm">Future of Energy</span></h2>
+                <p style="color:var(--text-secondary);max-width:560px;margin:0 auto;font-size:1rem;">
+                    A platform engineered from the ground up for India's evolving power market.
+                </p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card fade-in">
+                    <span class="why-icon">🤖</span>
+                    <h4>AI-Powered Analytics</h4>
+                    <p>ML price forecasting, demand prediction, and intelligent bid optimization powered by neural networks trained on India's grid data.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">⚡</span>
+                    <h4>Sub-Second Execution</h4>
+                    <p>Ultra-low latency matching engine with &lt;50ms order execution. Co-located infrastructure for institutional traders.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">🔒</span>
+                    <h4>Bank-Grade Security</h4>
+                    <p>End-to-end encryption, multi-factor auth, hardware security modules, and SOC-2 certified trading infrastructure.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">📱</span>
+                    <h4>Trade Anywhere</h4>
+                    <p>Native mobile apps, responsive dashboards, WhatsApp alerts, and API-first architecture for seamless integration.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">🏛️</span>
+                    <h4>CERC Regulated</h4>
+                    <p>Fully licensed and regulated by the Central Electricity Regulatory Commission. Complete audit trail and compliance tools.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">💰</span>
+                    <h4>Lowest Fees</h4>
+                    <p>Industry-leading transaction fees starting at ₹0.01/kWh. No hidden charges. Volume-based discounts available.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">🔗</span>
+                    <h4>Open API Platform</h4>
+                    <p>RESTful & WebSocket APIs for algorithmic trading, ERP integration, and custom dashboard development.</p>
+                </div>
+                <div class="why-card fade-in">
+                    <span class="why-icon">🌱</span>
+                    <h4>Green First</h4>
+                    <p>Dedicated renewable energy corridors, carbon tracking, ESG reporting, and RPO compliance automation built-in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta-section">
+        <div class="cta-content fade-in">
+            <h2>Ready to <span class="gradient-text">Electrify</span> Your Trading?</h2>
+            <p>Join 7,200+ participants already trading on India's most advanced power exchange platform.</p>
+            <div class="cta-actions">
+                <a href="#" class="btn-primary" style="padding:16px 36px;font-size:1rem;">
+                    Create Free Account
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#" class="btn-outline" style="padding:16px 36px;font-size:1rem;">Request Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 40 40" fill="none">
+                                <path d="M20 2L4 12v16l16 10 16-10V12L20 2z" stroke="url(#g2)" stroke-width="2" fill="none"/>
+                                <path d="M15 18l5 8 5-8" stroke="url(#g2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <defs><linearGradient id="g2" x1="0" y1="0" x2="40" y2="40"><stop stop-color="#00e5ff"/><stop offset="1" stop-color="#00e676"/></linearGradient></defs>
+                            </svg>
+                        </div>
+                        <div class="logo-text">Apex<span>Power</span></div>
+                    </a>
+                    <p>India's next-generation power exchange platform. Enabling transparent, efficient, and sustainable electricity trading for the nation.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Markets</h4>
+                    <ul>
+                        <li><a href="#">Day-Ahead Market</a></li>
+                        <li><a href="#">Real-Time Market</a></li>
+                        <li><a href="#">Green Markets</a></li>
+                        <li><a href="#">Term-Ahead Market</a></li>
+                        <li><a href="#">REC Trading</a></li>
+                        <li><a href="#">Cross-Border</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Trading Dashboard</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">API Documentation</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">Alerts & Notifications</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Regulatory</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 ApexPower Exchange Limited. All rights reserved.</p>
+                <span class="cerc">CERC Licensed Power Exchange</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ JAVASCRIPT ============ -->
+    <script>
+    (() => {
+        'use strict';
+
+        /* ── TICKER ── */
+        const tickerData = [
+            { label: 'DAM MCP', value: '₹4,280/MWh', change: '+3.2%', dir: 'up' },
+            { label: 'RTM MCP', value: '₹3,950/MWh', change: '-1.4%', dir: 'down' },
+            { label: 'G-DAM', value: '₹3,620/MWh', change: '+5.8%', dir: 'up' },
+            { label: 'Total Volume', value: '394 GWh', change: '+8.1%', dir: 'up' },
+            { label: 'REC Price', value: '₹1,200', change: '+2.3%', dir: 'up' },
+            { label: 'Peak Demand', value: '216 GW', change: '+1.8%', dir: 'up' },
+            { label: 'Solar Gen', value: '72 GW', change: '+12.4%', dir: 'up' },
+            { label: 'Wind Gen', value: '38 GW', change: '-3.1%', dir: 'down' },
+        ];
+        const tickerTrack = document.getElementById('tickerTrack');
+        let tickerHTML = '';
+        for (let r = 0; r < 3; r++) {
+            tickerData.forEach(t => {
+                tickerHTML += `<div class="ticker-item">
+                    <span class="label">${t.label}</span>
+                    <span class="value">${t.value}</span>
+                    <span class="${t.dir}">${t.change}</span>
+                </div><div class="ticker-divider"></div>`;
+            });
+        }
+        tickerTrack.innerHTML = tickerHTML;
+
+        /* ── NAV SCROLL ── */
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        /* ── COUNTER ANIMATION ── */
+        const counters = document.querySelectorAll('[data-count]');
+        const animateCounter = (el) => {
+            const target = parseInt(el.dataset.count);
+            const suffix = target > 1000 ? '+' : '+';
+            let current = 0;
+            const step = Math.max(1, Math.floor(target / 60));
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                el.textContent = current.toLocaleString('en-IN') + suffix;
+            }, 25);
+        };
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCounter(e.target);
+                    counterObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(c => counterObserver.observe(c));
+
+        /* ── FADE-IN OBSERVER ── */
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+        /* ── HERO PARTICLE VISUALIZATION ── */
+        const heroCanvas = document.getElementById('heroVisualization');
+        if (heroCanvas) {
+            const ctx = heroCanvas.getContext('2d');
+            let W, H;
+            const resize = () => {
+                W = heroCanvas.width = heroCanvas.offsetWidth * window.devicePixelRatio;
+                H = heroCanvas.height = heroCanvas.offsetHeight * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            };
+            resize();
+            window.addEventListener('resize', resize);
+
+            const nodes = [];
+            const NODE_COUNT = 80;
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodes.push({
+                    x: Math.random() * heroCanvas.offsetWidth,
+                    y: Math.random() * heroCanvas.offsetHeight,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    r: Math.random() * 3 + 1,
+                    pulse: Math.random() * Math.PI * 2,
+                });
+            }
+
+            const drawHero = (time) => {
+                ctx.clearRect(0, 0, heroCanvas.offsetWidth, heroCanvas.offsetHeight);
+                const w = heroCanvas.offsetWidth, h = heroCanvas.offsetHeight;
+
+                // connections
+                for (let i = 0; i < nodes.length; i++) {
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const dx = nodes[i].x - nodes[j].x;
+                        const dy = nodes[i].y - nodes[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 140) {
+                            const alpha = (1 - dist / 140) * 0.25;
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // nodes
+                nodes.forEach(n => {
+                    n.x += n.vx;
+                    n.y += n.vy;
+                    if (n.x < 0 || n.x > w) n.vx *= -1;
+                    if (n.y < 0 || n.y > h) n.vy *= -1;
+                    n.pulse += 0.02;
+                    const r = n.r + Math.sin(n.pulse) * 0.8;
+
+                    // glow
+                    const grd = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 6);
+                    grd.addColorStop(0, 'rgba(0, 229, 255, 0.3)');
+                    grd.addColorStop(1, 'rgba(0, 229, 255, 0)');
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, r * 6, 0, Math.PI * 2);
+                    ctx.fillStyle = grd;
+                    ctx.fill();
+
+                    // core
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0, 229, 255, 0.8)';
+                    ctx.fill();
+                });
+
+                // central energy burst
+                const cx = w * 0.5, cy = h * 0.5;
+                const burstR = 120 + Math.sin(time / 1500) * 30;
+                const burstGrd = ctx.createRadialGradient(cx, cy, 0, cx, cy, burstR);
+                burstGrd.addColorStop(0, 'rgba(0, 229, 255, 0.12)');
+                burstGrd.addColorStop(0.5, 'rgba(124, 77, 255, 0.06)');
+                burstGrd.addColorStop(1, 'rgba(0, 230, 118, 0)');
+                ctx.beginPath();
+                ctx.arc(cx, cy, burstR, 0, Math.PI * 2);
+                ctx.fillStyle = burstGrd;
+                ctx.fill();
+
+                // rotating rings
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(time / 4000);
+                for (let ring = 0; ring < 3; ring++) {
+                    const ringR = 80 + ring * 50;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, ringR, 0, Math.PI * 0.8);
+                    ctx.strokeStyle = `rgba(0, 229, 255, ${0.15 - ring * 0.04})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                requestAnimationFrame(drawHero);
+            };
+            requestAnimationFrame(drawHero);
+        }
+
+        /* ── PRICE CHART ── */
+        const priceCanvas = document.getElementById('priceChart');
+        if (priceCanvas) {
+            const pctx = priceCanvas.getContext('2d');
+            const resizePrice = () => {
+                priceCanvas.width = priceCanvas.offsetWidth * window.devicePixelRatio;
+                priceCanvas.height = priceCanvas.offsetHeight * window.devicePixelRatio;
+                pctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            };
+            resizePrice();
+
+            // Generate realistic 24-hour price curve
+            const points = [];
+            const numPoints = 96; // 15-min intervals
+            let price = 3200;
+            for (let i = 0; i < numPoints; i++) {
+                const hour = (i / 4);
+                // morning ramp, evening peak, night low
+                const basePattern = Math.sin((hour - 6) / 24 * Math.PI * 2) * 600
+                    + Math.sin((hour - 18) / 12 * Math.PI) * 800 * (hour > 16 && hour < 22 ? 1 : 0);
+                price = 3500 + basePattern + (Math.random() - 0.5) * 200;
+                price = Math.max(2000, Math.min(6000, price));
+                points.push(price);
+            }
+
+            const w = priceCanvas.offsetWidth, h = priceCanvas.offsetHeight;
+            const minP = Math.min(...points) - 200;
+            const maxP = Math.max(...points) + 200;
+            const padTop = 20, padBottom = 30, padLeft = 50, padRight = 20;
+            const chartW = w - padLeft - padRight;
+            const chartH = h - padTop - padBottom;
+
+            const getX = (i) => padLeft + (i / (numPoints - 1)) * chartW;
+            const getY = (v) => padTop + (1 - (v - minP) / (maxP - minP)) * chartH;
+
+            // Grid lines
+            pctx.strokeStyle = 'rgba(136,146,168,0.08)';
+            pctx.lineWidth = 1;
+            for (let v = Math.ceil(minP / 500) * 500; v <= maxP; v += 500) {
+                const y = getY(v);
+                pctx.beginPath();
+                pctx.moveTo(padLeft, y);
+                pctx.lineTo(w - padRight, y);
+                pctx.stroke();
+
+                pctx.fillStyle = 'rgba(136,146,168,0.4)';
+                pctx.font = '11px JetBrains Mono, monospace';
+                pctx.textAlign = 'right';
+                pctx.fillText('₹' + v.toLocaleString(), padLeft - 8, y + 4);
+            }
+
+            // X-axis labels
+            pctx.fillStyle = 'rgba(136,146,168,0.4)';
+            pctx.font = '10px JetBrains Mono, monospace';
+            pctx.textAlign = 'center';
+            for (let hr = 0; hr <= 24; hr += 4) {
+                const x = getX(hr * 4);
+                pctx.fillText(hr.toString().padStart(2, '0') + ':00', x, h - 8);
+            }
+
+            // Gradient fill
+            const grd = pctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+            grd.addColorStop(0, 'rgba(0, 229, 255, 0.15)');
+            grd.addColorStop(1, 'rgba(0, 229, 255, 0)');
+            pctx.beginPath();
+            pctx.moveTo(getX(0), getY(points[0]));
+            points.forEach((p, i) => pctx.lineTo(getX(i), getY(p)));
+            pctx.lineTo(getX(numPoints - 1), padTop + chartH);
+            pctx.lineTo(getX(0), padTop + chartH);
+            pctx.closePath();
+            pctx.fillStyle = grd;
+            pctx.fill();
+
+            // Line
+            pctx.beginPath();
+            pctx.moveTo(getX(0), getY(points[0]));
+            points.forEach((p, i) => {
+                if (i === 0) return;
+                const prevX = getX(i - 1), prevY = getY(points[i - 1]);
+                const curX = getX(i), curY = getY(p);
+                const cpx = (prevX + curX) / 2;
+                pctx.bezierCurveTo(cpx, prevY, cpx, curY, curX, curY);
+            });
+            const lineGrd = pctx.createLinearGradient(0, 0, w, 0);
+            lineGrd.addColorStop(0, '#00e5ff');
+            lineGrd.addColorStop(0.5, '#00e676');
+            lineGrd.addColorStop(1, '#ffc400');
+            pctx.strokeStyle = lineGrd;
+            pctx.lineWidth = 2.5;
+            pctx.stroke();
+
+            // Current price dot
+            const lastX = getX(numPoints - 1), lastY = getY(points[numPoints - 1]);
+            pctx.beginPath();
+            pctx.arc(lastX, lastY, 5, 0, Math.PI * 2);
+            pctx.fillStyle = '#00e5ff';
+            pctx.fill();
+            pctx.beginPath();
+            pctx.arc(lastX, lastY, 10, 0, Math.PI * 2);
+            pctx.strokeStyle = 'rgba(0, 229, 255, 0.3)';
+            pctx.lineWidth = 2;
+            pctx.stroke();
+        }
+
+        /* ── SPARKLINE CHARTS ── */
+        document.querySelectorAll('.market-card-sparkline').forEach(canvas => {
+            const sctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+            canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+            sctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+            const sw = canvas.offsetWidth, sh = canvas.offsetHeight;
+            const pts = [];
+            let v = 50;
+            for (let i = 0; i < 30; i++) {
+                v += (Math.random() - 0.48) * 10;
+                v = Math.max(10, Math.min(90, v));
+                pts.push(v);
+            }
+            const minV = Math.min(...pts), maxV = Math.max(...pts);
+            const norm = pts.map(p => ((p - minV) / (maxV - minV)) * (sh - 8) + 4);
+
+            const sgrd = sctx.createLinearGradient(0, 0, sw, 0);
+            sgrd.addColorStop(0, '#00e5ff');
+            sgrd.addColorStop(1, '#00e676');
+
+            const fgrd = sctx.createLinearGradient(0, 0, 0, sh);
+            fgrd.addColorStop(0, 'rgba(0,229,255,0.15)');
+            fgrd.addColorStop(1, 'rgba(0,229,255,0)');
+
+            sctx.beginPath();
+            pts.forEach((_, i) => {
+                const x = (i / (pts.length - 1)) * sw;
+                const y = sh - norm[i];
+                i === 0 ? sctx.moveTo(x, y) : sctx.lineTo(x, y);
+            });
+            sctx.strokeStyle = sgrd;
+            sctx.lineWidth = 2;
+            sctx.stroke();
+
+            sctx.lineTo(sw, sh);
+            sctx.lineTo(0, sh);
+            sctx.closePath();
+            sctx.fillStyle = fgrd;
+            sctx.fill();
+        });
+
+        /* ── GRID CANVAS (Network Visualization) ── */
+        const gridCanvas = document.getElementById('gridCanvas');
+        if (gridCanvas) {
+            const gctx = gridCanvas.getContext('2d');
+            let GW, GH;
+            const resizeGrid = () => {
+                GW = gridCanvas.width = gridCanvas.offsetWidth * window.devicePixelRatio;
+                GH = gridCanvas.height = gridCanvas.offsetHeight * window.devicePixelRatio;
+                gctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            };
+            resizeGrid();
+
+            const gw = gridCanvas.offsetWidth, gh = gridCanvas.offsetHeight;
+
+            // Indian grid regions
+            const regions = [
+                { name: 'Northern', x: gw * 0.45, y: gh * 0.22, color: '#00e5ff', cap: '108 GW' },
+                { name: 'Western', x: gw * 0.3, y: gh * 0.52, color: '#ffc400', cap: '118 GW' },
+                { name: 'Southern', x: gw * 0.48, y: gh * 0.78, color: '#00e676', cap: '95 GW' },
+                { name: 'Eastern', x: gw * 0.68, y: gh * 0.45, color: '#7c4dff', cap: '56 GW' },
+                { name: 'North-Eastern', x: gw * 0.82, y: gh * 0.28, color: '#ff4081', cap: '5 GW' },
+            ];
+
+            // Connections
+            const connections = [
+                [0, 1], [0, 3], [1, 2], [1, 3], [2, 3], [3, 4]
+            ];
+
+            // Particles flowing along connections
+            const particles = [];
+            connections.forEach(([a, b]) => {
+                for (let i = 0; i < 3; i++) {
+                    particles.push({
+                        from: a, to: b,
+                        t: Math.random(),
+                        speed: 0.002 + Math.random() * 0.003,
+                        reverse: Math.random() > 0.5,
+                    });
+                }
+            });
+
+            const drawGrid = (time) => {
+                gctx.clearRect(0, 0, gw, gh);
+
+                // Background glow
+                const bgGrd = gctx.createRadialGradient(gw / 2, gh / 2, 0, gw / 2, gh / 2, gw * 0.5);
+                bgGrd.addColorStop(0, 'rgba(0, 229, 255, 0.04)');
+                bgGrd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                gctx.fillStyle = bgGrd;
+                gctx.fillRect(0, 0, gw, gh);
+
+                // Connections
+                connections.forEach(([a, b]) => {
+                    gctx.beginPath();
+                    gctx.moveTo(regions[a].x, regions[a].y);
+                    gctx.lineTo(regions[b].x, regions[b].y);
+                    gctx.strokeStyle = 'rgba(0, 229, 255, 0.15)';
+                    gctx.lineWidth = 2;
+                    gctx.stroke();
+                });
+
+                // Flowing particles
+                particles.forEach(p => {
+                    p.t += p.speed;
+                    if (p.t > 1) p.t = 0;
+                    const t = p.reverse ? 1 - p.t : p.t;
+                    const fromR = regions[p.from], toR = regions[p.to];
+                    const px = fromR.x + (toR.x - fromR.x) * t;
+                    const py = fromR.y + (toR.y - fromR.y) * t;
+
+                    const pgrd = gctx.createRadialGradient(px, py, 0, px, py, 8);
+                    pgrd.addColorStop(0, 'rgba(0, 229, 255, 0.8)');
+                    pgrd.addColorStop(1, 'rgba(0, 229, 255, 0)');
+                    gctx.beginPath();
+                    gctx.arc(px, py, 8, 0, Math.PI * 2);
+                    gctx.fillStyle = pgrd;
+                    gctx.fill();
+                });
+
+                // Region nodes
+                regions.forEach(r => {
+                    // outer glow
+                    const rGlow = gctx.createRadialGradient(r.x, r.y, 0, r.x, r.y, 50);
+                    rGlow.addColorStop(0, r.color + '30');
+                    rGlow.addColorStop(1, 'rgba(0,0,0,0)');
+                    gctx.beginPath();
+                    gctx.arc(r.x, r.y, 50, 0, Math.PI * 2);
+                    gctx.fillStyle = rGlow;
+                    gctx.fill();
+
+                    // ring
+                    const ringR = 22 + Math.sin(time / 1000 + regions.indexOf(r)) * 3;
+                    gctx.beginPath();
+                    gctx.arc(r.x, r.y, ringR, 0, Math.PI * 2);
+                    gctx.strokeStyle = r.color + '60';
+                    gctx.lineWidth = 2;
+                    gctx.stroke();
+
+                    // core
+                    gctx.beginPath();
+                    gctx.arc(r.x, r.y, 8, 0, Math.PI * 2);
+                    gctx.fillStyle = r.color;
+                    gctx.fill();
+
+                    // label
+                    gctx.fillStyle = '#e8edf5';
+                    gctx.font = '600 12px Inter, sans-serif';
+                    gctx.textAlign = 'center';
+                    gctx.fillText(r.name, r.x, r.y - 32);
+                    gctx.fillStyle = r.color;
+                    gctx.font = '600 11px JetBrains Mono, monospace';
+                    gctx.fillText(r.cap, r.x, r.y + 40);
+                });
+
+                requestAnimationFrame(drawGrid);
+            };
+            requestAnimationFrame(drawGrid);
+        }
+
+    })();
+    </script>
+</body>
+</html>
